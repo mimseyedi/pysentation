@@ -622,7 +622,30 @@ class Pysentation:
 
         :return: PysentationScreen[PysentationSlide...]
         """
-        pass
+
+        source: str = self.read_source()
+
+        seperated_source: list = self.separator(
+            source_code=source
+        )
+
+        slides: list = []
+        for number, scope in enumerate(seperated_source):
+            slide: PysentationSlide = self.validator(
+                slide=scope.split("\n"),
+                slide_number=f"{number+1}/{len(seperated_source)}"
+            )
+            slides.append(slide)
+
+        if slides:
+            screen: PysentationScreen = PysentationScreen(
+                slides=slides
+            )
+            return screen
+
+        raise PysentationEmptyScreenError(
+            "There are no slides to display on the screen."
+        )
 
     @staticmethod
     def check_source(source_path: str|Path) -> bool:
