@@ -321,7 +321,9 @@ class PysentationScreen:
 
         :return: None
         """
-        pass
+
+        os.system('clear' if os.name == 'posix' else 'cls')
+        cprint(self.slides[self.__slideno].render())
 
     def next_slide(self) -> None:
         """
