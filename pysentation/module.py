@@ -472,7 +472,58 @@ class Pysentation:
         :param slide: A text-base slide separated by the self.separator method
         :return: dict
         """
-        pass
+
+        props_items: list = [
+            'title',
+            'title_align',
+            'color',
+            'expand',
+            'code_bg_color',
+            'code_theme',
+            'interpretable',
+        ]
+
+        props: dict = {}
+
+        for lineno, line in enumerate(slide, start=1):
+            if line.strip().startswith(PYSENTATION_PROPERTY):
+                try:
+                    prop, value = line.strip()[2:].split(":")[0], line.strip()[2:].split(":")[1]
+
+                    if prop in props_items:
+                        if value:
+                            if prop in ["code_bg_color", 'color']:
+                                try:
+                                    Style(bgcolor=value)
+                                except ColorParseError:
+                                    raise PysentationPropertyError(
+                                        f"'{value}' in line {lineno} is not a valid color."
+                                    )
+                            elif prop in ["interpretable", 'expand']:
+                                if value.strip() not in ['True', 'False']:
+                                    raise PysentationPropertyError(
+                                        f"'{prop}' in line {lineno} must be of type bool."
+                                    )
+                                else:
+                                    value = 'True' if value.strip() == 'True' else ''
+
+                            props[prop] = value.strip()
+
+                        else:
+                            raise PysentationPropertyError(
+                                f"Undefined property or invalid value in line {lineno} -> {prop}",
+                            )
+                    else:
+                        raise PysentationPropertyError(
+                            f"There is no such property in line {lineno} -> {prop}"
+                        )
+
+                except IndexError:
+                    raise PysentationPropertyError(
+                        f"Undefined property or invalid value in line {lineno}."
+                    )
+
+        return props
 
     @staticmethod
     def extract_content(slide: list[str]) -> list[str]:
