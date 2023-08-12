@@ -533,7 +533,23 @@ class Pysentation:
         :param slide: A text-base slide separated by the self.separator method
         :return: list[str]
         """
-        pass
+
+        content: list = []
+
+        for index, line in enumerate(slide, start=1):
+            if not line.strip().startswith(PYSENTATION_PROPERTY):
+                if line.strip().startswith(PYSENTATION_COMMENT):
+                    try:
+                        render(line.strip())
+                    except MarkupError:
+                        raise PysentationCommentError(
+                            f"Written comment cannot be rendered -> '{line.strip()[2:]}'"
+                        )
+
+                content.append(line)
+
+        content.pop(0)
+        return content
 
     @staticmethod
     def modified_content(content: list[str]) -> list:
