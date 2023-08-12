@@ -143,7 +143,20 @@ class PysentationSlide:
 
         :return: None
         """
-        pass
+
+        if self.__h_line > 1:
+            self.__h_line -= 1
+        else:
+            if self.__code_index - 1 == -1:
+                self.__codes[self.__code_index].highlight_lines = {}
+                self.__code_index = len(self.__codes) - 1
+                self.__h_line = len(self.__codes[self.__code_index].code.split("\n"))
+            else:
+                self.__codes[self.__code_index].highlight_lines = {}
+                self.__code_index -= 1
+                self.__h_line = len(self.__codes[self.__code_index].code.split("\n"))
+
+            self.__codes[self.__code_index].highlight_lines = {self.__h_line}
 
     def go_down(self) -> None:
         """
