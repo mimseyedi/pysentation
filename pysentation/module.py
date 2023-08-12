@@ -238,7 +238,9 @@ class PysentationSlide:
 
         :return: None
         """
-        pass
+
+        self.__h_line = 1
+        self.__code_index = 0
 
     def __fix_syntax_highlighter(self) -> None:
         """
