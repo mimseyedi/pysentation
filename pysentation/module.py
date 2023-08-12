@@ -220,3 +220,109 @@ class PysentationScreen:
 
     def __str__(self):
         pass
+
+class Pysentation:
+    """
+    An object of this class can read a Python source and create a PysentationScreen from a collection of PysentationSlide.
+    By validating and confirming the parameters and rules of a Python file, written in pysentation style to create a Python presentation,
+    any object of this class can return a screen to display slides. By using the build method, you can create a PysentationScreen
+    according to the source and have access and control to display the slides.
+
+    Args:
+        source (str|Path): The address of the python file to be converted into a pysentation presentation.
+    """
+
+    def __init__(self, source: str|Path) -> None:
+        pass
+
+    def read_source(self) -> str:
+        """
+        The task of this method is to read and validate the source to continue the process of
+        converting the source to PysentationScreen.
+
+        :return: str
+        """
+        pass
+
+    @staticmethod
+    def detector(source: str) -> tuple[bool, str|PysentationError]:
+        """
+        The task of this method is to find the scope and range of pysentation.
+
+        :param source: The source path.
+        :return: tuple[bool, str|PysentationError]
+        """
+        pass
+
+    @staticmethod
+    def separator(source_code: str) -> list[str]:
+        """
+        The task of this method is to separate the slides in the source.
+
+        :param source_code: The source contents.
+        :return: list[str]
+        """
+        pass
+
+    @staticmethod
+    def extract_props(slide: list[str]) -> dict:
+        """
+        The task of this method is to extract and validate the properties of a slide.
+
+        :param slide: A text-base slide separated by the self.separator method
+        :return: dict
+        """
+        pass
+
+    @staticmethod
+    def extract_content(slide: list[str]) -> list[str]:
+        """
+        The task of this method is to extract and validate the content of a slide.
+
+        :param slide: A text-base slide separated by the self.separator method
+        :return: list[str]
+        """
+        pass
+
+    @staticmethod
+    def modified_content(content: list[str]) -> list:
+        """
+        The task of this method is to modify the initial content.
+
+        :param content: Initial content created by self.extract_content method.
+        :return: list
+        """
+        pass
+
+    def validator(self, slide: list[str], slide_number: str) -> PysentationSlide:
+        """
+        The task of this method is to fully validate a slide and create an object from PysentationSlide if the slide is approved.
+
+        :param slide: A text-base slide separated by the self.separator method
+        :param slide_number: Slide number in integer type.
+        :return: PysentationSlide
+        """
+        pass
+
+    def build(self) -> PysentationScreen:
+        """
+        This is the main method. With the help of this method, the steps of creating an object from PysentationScreen
+        are started and managed, until finally an object from PysentationScreen containing one or more objects from
+        PysentationSlide is prepared and returned.
+
+        :return: PysentationScreen[PysentationSlide...]
+        """
+        pass
+
+    @staticmethod
+    def check_source(source_path: str|Path) -> bool:
+        """
+        The task of this method is to validate the source path.
+
+        :param source_path: The source path.
+        :return: bool
+        """
+        pass
+
+    def __repr__(self):
+        pass
