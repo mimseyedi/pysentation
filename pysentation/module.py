@@ -676,4 +676,4 @@ class Pysentation:
         return True
 
     def __repr__(self):
-        pass
+        return f"Pysentation(source='{self.source}')"
