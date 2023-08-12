@@ -370,7 +370,9 @@ class PysentationScreen:
 
         :return: None
         """
-        pass
+
+        self.__slideno = 0
+        self.display()
 
     def __eq__(self, other):
         pass
