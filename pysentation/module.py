@@ -77,7 +77,20 @@ class PysentationSlide:
         code_theme: str|SyntaxTheme = 'gruvbox-dark',
         interpretable: bool = True,
     ) -> None:
-        pass
+        self.content = content
+        self.slide_number = slide_number
+        self.title = title
+        self.title_align = title_align
+        self.color = color
+        self.expand = expand
+        self.code_bg_color = code_bg_color
+        self.code_theme = code_theme
+        self.interpretable = interpretable
+        self.__h_line: int = 1
+        self.__code_index: int = 0
+        self.__codes: list = [
+            element for element in self.content if isinstance(element, Syntax)
+        ]
 
     def render(self) -> Panel:
         """
