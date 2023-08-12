@@ -190,9 +190,9 @@ class PysentationSlide:
         :return: tuple[bool, str]
         """
 
-        output = None
-        c_stdout = sys.stdout
-        sys.stdout = open(file=".output.txt", mode='w+')
+        output, output_file = None, Path(Path(__file__), ".output.txt")
+        c_stdout: sys.stdout = sys.stdout
+        sys.stdout = open(file=output_file, mode='w+')
 
         try:
             exec(source)
@@ -200,11 +200,11 @@ class PysentationSlide:
             sys.stdout = c_stdout
 
             with open(
-                    file=".output.txt", mode='r'
+                    file=output_file, mode='r'
             ) as output_file:
                 output = output_file.read()
 
-        except (SyntaxError, TabError, IndentationError) as error:
+        except (OverflowError, SyntaxError, TabError, IndentationError) as error:
             sys.stdout.close()
             sys.stdout = c_stdout
 
@@ -398,8 +398,7 @@ class Pysentation:
     """
 
     def __init__(self, source: str|Path) -> None:
-        if self.check_source(source_path=source):
-            self.source = source if isinstance(source, Path) else Path(os.getcwd(), source)
+        self.source = self.check_source(source_path=source)
 
     def read_source(self) -> str:
         """
@@ -607,7 +606,6 @@ class Pysentation:
                 slide=slide
             )
         )
-
         return PysentationSlide(
             content=content,
             slide_number=slide_number,
@@ -648,32 +646,32 @@ class Pysentation:
         )
 
     @staticmethod
-    def check_source(source_path: str|Path) -> bool:
+    def check_source(source_path: str|Path) -> Path:
         """
-        The task of this method is to validate the source path.
+        The task of this method is to validate the source path and return validated path.
 
         :param source_path: The source path.
-        :return: bool
+        :return: Path
         """
 
-        source_path: Path = source_path if isinstance(source_path, Path) \
+        _source_path: Path = source_path if isinstance(source_path, Path) \
             else Path(os.getcwd(), source_path)
 
         for condition, exception in {
-            source_path.suffix == '.py': PysentationNotAPythonFileError(
+            _source_path.suffix == '.py': PysentationNotAPythonFileError(
                 'The source must be a Python file with (.py) suffix.'
             ),
-            source_path.is_file(): PysentationIsADirectoryError(
+            _source_path.is_file(): PysentationIsADirectoryError(
                 'The source must be a file, not a directory.'
             ),
-            source_path.exists(): PysentationFileNotFoundError(
-                f'This file does not exist! -> {source_path.name}'
+            _source_path.exists(): PysentationFileNotFoundError(
+                f'This file does not exist! -> {_source_path.name}'
             ),
         }.items():
             if not condition:
                 raise exception
 
-        return True
+        return _source_path
 
     def __repr__(self):
         return f"Pysentation(source='{self.source}')"
