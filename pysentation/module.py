@@ -398,7 +398,8 @@ class Pysentation:
     """
 
     def __init__(self, source: str|Path) -> None:
-        pass
+        if self.check_source(source_path=source):
+            self.source = source if isinstance(source, Path) else Path(os.getcwd(), source)
 
     def read_source(self) -> str:
         """
