@@ -295,7 +295,7 @@ class PysentationSlide:
 
     def __str__(self):
         return f"PysentationSlide titled '{self.title}', with this content={self.content}"
-    
+
 
 class PysentationScreen:
     """
@@ -312,7 +312,8 @@ class PysentationScreen:
     """
 
     def __init__(self, slides: list[PysentationSlide]) -> None:
-        pass
+        self.slides = slides
+        self.__slideno: int = 0
 
     def display(self) -> None:
         """
