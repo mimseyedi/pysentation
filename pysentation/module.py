@@ -408,7 +408,16 @@ class Pysentation:
 
         :return: str
         """
-        pass
+
+        with open(file=self.source, mode='r') as source_file:
+            source: str = source_file.read()
+
+        status, response = self.detector(source=source)
+
+        if not status:
+            raise response
+
+        return response
 
     @staticmethod
     def detector(source: str) -> tuple[bool, str|PysentationError]:
