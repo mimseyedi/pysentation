@@ -263,17 +263,39 @@ class PysentationSlide:
                 )
 
     def __add__(self, other):
-        pass
+        return PysentationSlide(
+            content=[*self.content, *other.content],
+            slide_number=self.slide_number,
+            title=self.title,
+            title_align=self.title_align,
+            color=self.color,
+            expand=self.expand,
+            code_bg_color=self.code_bg_color,
+            code_theme=self.code_theme,
+            interpretable=self.interpretable,
+        )
 
     def __eq__(self, other):
-        pass
+        return True if self.content == other.content else False
 
     def __repr__(self):
-        pass
+        return (f"PysentationSlide("
+                f"content={self.content}, "
+                f"slide_number={self.slide_number}, "
+                f"title={self.title}, "
+                f"title_align={self.title_align}, "
+                f"color={self.color}, "
+                f"expand={self.expand}, "
+                f"code_bg_color={self.code_bg_color}, "
+                f"code_theme={self.code_theme}, "
+                f"interpretable={self.interpretable}, "
+                f"__codes={self.__codes}, "
+                f"__code_index={self.__code_index}, "
+                f"__h_line={self.__h_line})")
 
     def __str__(self):
-        pass
-
+        return f"PysentationSlide titled '{self.title}', with this content={self.content}"
+    
 
 class PysentationScreen:
     """
