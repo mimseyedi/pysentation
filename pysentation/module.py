@@ -104,7 +104,37 @@ class PysentationSlide:
 
         :return: rich.Panel
         """
-        pass
+
+        if self.interpretable:
+            for index, element in enumerate(self.content):
+                if isinstance(element, Syntax):
+                    status, response = self.interpret(source=element.code)
+
+                    output_panel = Panel(
+                        response.strip(),
+                        style='none' if status else 'red',
+                        title='Output' if status else '<Error>',
+                        title_align='left'
+                    )
+
+                    self.content.insert(index + 1, "")
+                    self.content.insert(index + 2, output_panel)
+
+        self.__fix_syntax_highlighter()
+
+        return Panel(
+            Group(
+                *self.content
+            ),
+            box=HEAVY,
+            title=self.title,
+            style=self.color,
+            title_align=self.title_align,
+            subtitle=self.slide_number,
+            expand=self.expand,
+            highlight=False,
+            padding=(1, 1, 1, 1),
+        )
 
     def go_up(self) -> None:
         """
