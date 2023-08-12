@@ -456,7 +456,13 @@ class Pysentation:
         :param source_code: The source contents.
         :return: list[str]
         """
-        pass
+
+        slides: list = source_code.split(PYSENTATION_SLIDE)
+
+        if slides:
+            slides.pop(0)
+
+        return slides
 
     @staticmethod
     def extract_props(slide: list[str]) -> dict:
