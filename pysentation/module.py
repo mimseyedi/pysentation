@@ -346,7 +346,10 @@ class PysentationScreen:
 
         :return: None
         """
-        pass
+
+        if self.__slideno > 0:
+            self.__slideno -= 1
+            self.display()
 
     def reset_slide(self) -> None:
         """
