@@ -375,13 +375,16 @@ class PysentationScreen:
         self.display()
 
     def __eq__(self, other):
-        pass
+        return True if self.slides == other.slides else False
 
     def __repr__(self):
-        pass
+        return (f"PysentationScreen("
+                f"slides={self.slides}, "
+                f"__slideno={self.__slideno})")
 
     def __str__(self):
-        pass
+        return f"PysentationScreen with these PysentationSlides={self.slides}"
+
 
 class Pysentation:
     """
