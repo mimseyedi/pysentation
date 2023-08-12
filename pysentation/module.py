@@ -559,7 +559,7 @@ class Pysentation:
         :param content: Initial content created by self.extract_content method.
         :return: list
         """
-        
+
         modified_content, codes = [], ''
 
         for line in content:
@@ -599,7 +599,20 @@ class Pysentation:
         :param slide_number: Slide number in integer type.
         :return: PysentationSlide
         """
-        pass
+
+        props: dict = self.extract_props(slide=slide)
+
+        content: list = self.modified_content(
+            content=self.extract_content(
+                slide=slide
+            )
+        )
+
+        return PysentationSlide(
+            content=content,
+            slide_number=slide_number,
+            **props
+        )
 
     def build(self) -> PysentationScreen:
         """
