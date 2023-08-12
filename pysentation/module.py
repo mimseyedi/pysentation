@@ -427,7 +427,26 @@ class Pysentation:
         :param source: The source path.
         :return: tuple[bool, str|PysentationError]
         """
-        pass
+
+        block, start_line, end_line = False, None, None
+
+        for index, code in enumerate(source.split("\n")):
+            if code.strip().startswith(PYSENTATION_STARTING_BLOCK):
+                block = True
+                start_line = index + 1
+
+            if code.strip().startswith(PYSENTATION_ENDING_BLOCK) and block:
+                end_line = index
+                return True, '\n'.join(source.split("\n")[start_line: end_line])
+
+        if start_line:
+            return (
+                False,
+                PysentationScopeRangeError(
+                    f"The pysentation scope is started on line '{start_line}' but never closed."
+                )
+            )
+        return False, PysentationInitError("No scope of pysentation found.")
 
     @staticmethod
     def separator(source_code: str) -> list[str]:
