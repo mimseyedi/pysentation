@@ -559,7 +559,37 @@ class Pysentation:
         :param content: Initial content created by self.extract_content method.
         :return: list
         """
-        pass
+        
+        modified_content, codes = [], ''
+
+        for line in content:
+            if line.strip():
+                if not line.strip().startswith(PYSENTATION_COMMENT):
+                    codes += line.rstrip() + "\n"
+                else:
+                    if codes:
+                        modified_content.append(
+                            Syntax(
+                                code=codes[:-1],
+                                lexer='python',
+                            )
+                        )
+                        modified_content.append("")
+                        modified_content.append(line.strip()[2:] + "\n")
+                    else:
+                        modified_content.append(line.strip()[2:] + "\n")
+
+                    codes: str = ''
+
+        if codes:
+            modified_content.append(
+                Syntax(
+                    code=codes[:-1],
+                    lexer='python',
+                )
+            )
+
+        return modified_content
 
     def validator(self, slide: list[str], slide_number: str) -> PysentationSlide:
         """
