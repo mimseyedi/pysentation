@@ -189,7 +189,47 @@ class PysentationSlide:
         :param source: The source code to be interpreted as a string.
         :return: tuple[bool, str]
         """
-        pass
+
+        output = None
+        c_stdout = sys.stdout
+        sys.stdout = open(file=".output.txt", mode='w+')
+
+        try:
+            exec(source)
+            sys.stdout.close()
+            sys.stdout = c_stdout
+
+            with open(
+                    file=".output.txt", mode='r'
+            ) as output_file:
+                output = output_file.read()
+
+        except (SyntaxError, TabError, IndentationError) as error:
+            sys.stdout.close()
+            sys.stdout = c_stdout
+
+            output = (f"Error Type: {error.__class__.__name__}\n"
+                      f"Error Message: {error.msg} in line {error.lineno}\n"
+                      f"{error.text.strip()}\n"
+                      f"{'^' * len(error.text.strip())}")
+
+        except BaseException:
+            sys.stdout.close()
+            sys.stdout = c_stdout
+
+            ex_type, ex_value, ex_traceback = sys.exc_info()
+
+            trace_back = traceback.extract_tb(ex_traceback)
+
+            output = (f"Exception Type: {ex_type.__name__}\n"
+                      f"Exception Message: {ex_value}\n"
+                      f"Scope {trace_back[1].name}, Line {trace_back[1].lineno}")
+        finally:
+            if output:
+                if output.startswith("Exception") or output.startswith("Error"):
+                    return False, output
+                return True, output
+            return True, 'None'
 
     def reset_slide(self) -> None:
         """
