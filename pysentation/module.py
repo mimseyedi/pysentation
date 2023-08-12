@@ -92,6 +92,11 @@ class PysentationSlide:
             element for element in self.content if isinstance(element, Syntax)
         ]
 
+        for element in self.content:
+            if isinstance(element, Syntax):
+                element.highlight_lines = {self.__h_line}
+                break
+
     def render(self) -> Panel:
         """
         The task of this method is to render the PysentationSlide and turn it into a panel of the rich module.
