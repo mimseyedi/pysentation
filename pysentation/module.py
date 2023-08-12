@@ -249,7 +249,18 @@ class PysentationSlide:
 
         :return: None
         """
-        pass
+
+        for index, element in enumerate(self.content):
+            if isinstance(element, Syntax):
+                self.content[index] = Syntax(
+                    code=element.code,
+                    lexer='python',
+                    line_numbers=True,
+                    start_line=1,
+                    indent_guides=True,
+                    background_color=self.code_bg_color,
+                    theme=self.code_theme,
+                )
 
     def __add__(self, other):
         pass
