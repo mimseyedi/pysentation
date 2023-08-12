@@ -333,7 +333,10 @@ class PysentationScreen:
 
         :return: None
         """
-        pass
+
+        if self.__slideno < len(self.slides) - 1:
+            self.__slideno += 1
+            self.display()
 
     def previous_slide(self) -> None:
         """
