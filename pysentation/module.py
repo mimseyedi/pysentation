@@ -146,3 +146,77 @@ class PysentationSlide:
 
     def __str__(self):
         pass
+
+
+class PysentationScreen:
+    """
+    PysentationScreen is a curtain to display PysentationSlides, which can manage and execute their display.
+
+    Among the tasks of PysentationScreen, the following can be mentioned:
+        - Show PysentationSlides
+        - Move between PysentationSlides
+        - Resetting the PysentationSlides
+        - Changing and modifying PysentationSlides
+
+    Args:
+        slides (list[PysentationSlide...]): A list of PysentationSlides to be displayed.
+    """
+
+    def __init__(self, slides: list[PysentationSlide]) -> None:
+        pass
+
+    def display(self) -> None:
+        """
+        This method displays the PysentationSlide selected by self.__slideno.
+
+        :return: None
+        """
+        pass
+
+    def next_slide(self) -> None:
+        """
+        With the help of this method, you can move between PysentationSlide.
+        The task of this method is to display the next PysentationSlide in the list.
+        If there is no PysentationSlide, it does nothing.
+
+        :return: None
+        """
+        pass
+
+    def previous_slide(self) -> None:
+        """
+        With the help of this method, you can move between PysentationSlide.
+        The task of this method is to display the previous PysentationSlide in the list.
+        If there is no PysentationSlide, it does nothing.
+
+        :return: None
+        """
+        pass
+
+    def reset_slide(self) -> None:
+        """
+        The task of this method is to reset the current PysentationSlide.
+        so that its values return to the initial state.
+
+        :return: None
+        """
+        pass
+
+    def reset_screen(self) -> None:
+        """
+        The task of this method is to reset the PysentationScreen.
+        so that its values return to the initial state.
+        Specifically reset self.__slideno.
+
+        :return: None
+        """
+        pass
+
+    def __eq__(self, other):
+        pass
+
+    def __repr__(self):
+        pass
+
+    def __str__(self):
+        pass
