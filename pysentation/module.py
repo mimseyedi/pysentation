@@ -655,7 +655,25 @@ class Pysentation:
         :param source_path: The source path.
         :return: bool
         """
-        pass
+
+        source_path: Path = source_path if isinstance(source_path, Path) \
+            else Path(os.getcwd(), source_path)
+
+        for condition, exception in {
+            source_path.suffix == '.py': PysentationNotAPythonFileError(
+                'The source must be a Python file with (.py) suffix.'
+            ),
+            source_path.is_file(): PysentationIsADirectoryError(
+                'The source must be a file, not a directory.'
+            ),
+            source_path.exists(): PysentationFileNotFoundError(
+                f'This file does not exist! -> {source_path.name}'
+            ),
+        }.items():
+            if not condition:
+                raise exception
+
+        return True
 
     def __repr__(self):
         pass
