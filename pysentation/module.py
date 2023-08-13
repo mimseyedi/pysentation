@@ -101,7 +101,7 @@ class PysentationSlide:
                     self.content.insert(index + 1, "")
                     self.content.insert(index + 2, output_panel)
 
-        self.__fix_syntax_highlighter()
+                    element._theme = element.get_theme(self.theme)
 
         self.__codes: list = [
             element for element in self.content if isinstance(element, Syntax)
@@ -238,30 +238,6 @@ class PysentationSlide:
         self.__code_index = 0
         self.go_up()
         self.go_down()
-
-    def __fix_syntax_highlighter(self) -> None:
-        """
-        The task of this method is to modify and replace the previously defined syntax highlighter with
-        the syntax highlighter that includes the source properties.
-
-        :return: None
-        """
-
-        first_syntax_highlighter: bool = True
-
-        for index, element in enumerate(self.content):
-            if isinstance(element, Syntax):
-                self.content[index] = Syntax(
-                    code=element.code,
-                    lexer='python',
-                    line_numbers=True,
-                    highlight_lines={1 if first_syntax_highlighter else None},
-                    start_line=1,
-                    indent_guides=True,
-                    background_color='default',
-                    theme=self.theme,
-                )
-                first_syntax_highlighter = False
 
     def __add__(self, other):
         return PysentationSlide(
@@ -724,7 +700,7 @@ class Pysentation:
         :return: list
         """
 
-        modified_content, codes = [], ''
+        modified_content, codes, first_sh = [], '', True
 
         for line in content:
             if line.strip():
@@ -736,8 +712,14 @@ class Pysentation:
                             Syntax(
                                 code=codes[:-1],
                                 lexer='python',
+                                line_numbers=True,
+                                start_line=1,
+                                indent_guides=True,
+                                background_color='default',
+                                highlight_lines={1 if first_sh else None}
                             )
                         )
+                        first_sh = False
                         modified_content.append("")
                         modified_content.append(line.strip()[2:] + "\n")
                     else:
@@ -750,6 +732,11 @@ class Pysentation:
                 Syntax(
                     code=codes[:-1],
                     lexer='python',
+                    line_numbers=True,
+                    start_line=1,
+                    indent_guides=True,
+                    background_color='default',
+                    highlight_lines={1 if first_sh else None}
                 )
             )
 
