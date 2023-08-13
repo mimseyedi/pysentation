@@ -32,6 +32,7 @@ from signs import (
 )
 from errors import (
     PysentationError,
+    PysentationScreenError,
     PysentationInitError,
     PysentationScopeRangeError,
     PysentationPropertyError,
@@ -58,9 +59,7 @@ class PysentationSlide:
         Its default value is "none", which follows the terminal's default color.
         expand (bool): If its value is True, the width of the slide will be equal to the width of the terminal screen, and
         otherwise, the width of the slide will be adjusted according to the size of its contents. Its default value is True.
-        code_bg_color (str): It sets the background color of the Python code display, and its default
-        value is 'default', which matches the default color of the terminal.
-        code_theme (str|SyntaxTheme): The theme highlights Python codes and its default value is 'gruvbox-dark'.
+        theme (str|SyntaxTheme): The theme highlights Python codes and its default value is 'gruvbox-dark'.
         It follows the strings and SyntaxTheme of the rich module.
         interpretable (bool): Can the codes in the slide be interpreted or not? The default value is True.
     """
@@ -73,8 +72,7 @@ class PysentationSlide:
         title_align: AlignMethod|str = 'center',
         color: StyleType = 'none',
         expand: bool = True,
-        code_bg_color: str = 'default',
-        code_theme: str|SyntaxTheme = 'gruvbox-dark',
+        theme: str|SyntaxTheme = 'gruvbox-dark',
         interpretable: bool = True,
     ) -> None:
         self.content = content
@@ -83,8 +81,7 @@ class PysentationSlide:
         self.title_align = title_align
         self.color = color
         self.expand = expand
-        self.code_bg_color = code_bg_color
-        self.code_theme = code_theme
+        self.theme = theme
         self.interpretable = interpretable
         self.__h_line: int = 1
         self.__code_index: int = 0
@@ -261,8 +258,8 @@ class PysentationSlide:
                     highlight_lines={1 if first_syntax_highlighter else None},
                     start_line=1,
                     indent_guides=True,
-                    background_color=self.code_bg_color,
-                    theme=self.code_theme,
+                    background_color='default',
+                    theme=self.theme,
                 )
                 first_syntax_highlighter = False
 
@@ -274,8 +271,7 @@ class PysentationSlide:
             title_align=self.title_align,
             color=self.color,
             expand=self.expand,
-            code_bg_color=self.code_bg_color,
-            code_theme=self.code_theme,
+            theme=self.theme,
             interpretable=self.interpretable,
         )
 
@@ -290,8 +286,7 @@ class PysentationSlide:
                 f"title_align={self.title_align}, "
                 f"color={self.color}, "
                 f"expand={self.expand}, "
-                f"code_bg_color={self.code_bg_color}, "
-                f"code_theme={self.code_theme}, "
+                f"theme={self.theme}, "
                 f"interpretable={self.interpretable}, "
                 f"__codes={self.__codes}, "
                 f"__code_index={self.__code_index}, "
@@ -394,6 +389,127 @@ class PysentationScreen:
 
         self.__slideno = len(self.slides) - 1
         self.display()
+
+    def start_from(self, slide_index: int) -> None:
+        """
+        The task of this method is to display the screen from the slide that the argument tells it.
+
+        :param slide_index: The slide index in the screen.
+        :return: None
+        """
+
+        if 0 <= slide_index < len(self.slides):
+            self.__slideno = slide_index
+            self.display()
+        else:
+            raise PysentationScreenError(
+                f"There is no slide with this number -> {slide_index + 1}"
+            )
+
+    def set_color(self, color: str) -> None:
+        """
+        The task of this method is to change the color of all the slides on the screen by the argument it receives.
+
+        :param color: The color name|number|hex|rgb in string format.
+        :return: None
+        """
+
+        try:
+            Style(color=color)
+        except ColorParseError:
+            raise PysentationScreenError(
+                (f"The '{color}' is not a valid color.\n"
+                  "Acceptable colors: https://github.com/mimseyedi/pysentation#colors")
+            )
+        else:
+            for slide in self.slides:
+                slide.color = color
+
+    def set_theme(self, theme: str) -> None:
+        """
+        The task of this method is to change the syntax highlighter theme of all the slides on the screen by the argument it receives.
+
+        :param theme: Theme name in string format.
+        :return: None
+        """
+
+        for slide in self.slides:
+            slide.theme = theme
+            for element in slide.content:
+                if isinstance(element, Syntax):
+                    element._theme = element.get_theme(theme)
+
+    def disable_output(self) -> None:
+        """
+        The task of this method is to disable the code interpretation in all slides.
+
+        :return: None
+        """
+
+        for slide in self.slides:
+            slide.interpretable = False
+            for index, element in enumerate(slide.content):
+                if isinstance(element, Panel):
+                    slide.content.pop(index)
+
+    def get_property(self, slide_index: int) -> str:
+        """
+        The task of this method is to return the properties of the slide that the argument tells it.
+
+        :param slide_index: The slide index in the screen.
+        :return: str
+        """
+
+        if 0 <= slide_index < len(self.slides):
+            slide: PysentationSlide = self.slides[slide_index]
+            return (f"Title\t\t>>> {slide.title}\n"
+                    f"Title align\t>>> {slide.title_align}\n"
+                    f"Number\t\t>>> {slide.slide_number}\n"
+                    f"Color\t\t>>> {slide.color}\n"
+                    f"Theme\t\t>>> {slide.theme}\n"
+                    f"Interpretable\t>>> {slide.interpretable}")
+        else:
+            raise PysentationScreenError(
+                f"There is no slide with this number -> {slide_index + 1}"
+            )
+
+    def get_slides(self) -> str:
+        """
+        The task of this method is to return the title of the slides along with their position.
+
+        :return: str
+        """
+
+        return '\n'.join(
+            [
+                f"{index}/{len(self.slides)} {slide.title}"
+                for index, slide in enumerate(self.slides, start=1)
+            ],
+        )
+
+    def write_output(self, output_path: str|Path) -> None:
+        """
+        The task of this method is to write the output in the text file given the path by the argument.
+
+        :param output_path: The path of output file in string or pathlib.Path format.
+        :return: None
+        """
+
+        output_path: Path = output_path if isinstance(output_path, Path) else Path(os.getcwd(), output_path)
+
+        if not output_path.exists():
+            if not output_path.is_dir() and output_path.suffix == '.txt':
+                with open(output_path, 'w+') as output_file:
+                    for slide in self.slides:
+                        cprint(slide.render(), file=output_file)
+            else:
+                raise PysentationScreenError(
+                    "The output file must not be a directory and must have a .txt suffix."
+                )
+        else:
+            raise PysentationScreenError(
+                f"A file with this name already exists -> '{output_path}'"
+            )
 
     def reset_slide(self) -> None:
         """
@@ -526,8 +642,7 @@ class Pysentation:
             'title_align',
             'color',
             'expand',
-            'code_bg_color',
-            'code_theme',
+            'theme',
             'interpretable',
         ]
 
@@ -540,9 +655,9 @@ class Pysentation:
 
                     if prop in props_items:
                         if value:
-                            if prop in ["code_bg_color", 'color']:
+                            if prop == 'color':
                                 try:
-                                    Style(bgcolor=value)
+                                    Style(color=value)
                                 except ColorParseError:
                                     raise PysentationPropertyError(
                                         (f"The '{value}' in slide {slide_number}, line {lineno} is not a valid color for '{prop}' property.\n"
