@@ -545,12 +545,13 @@ class Pysentation:
                                     Style(bgcolor=value)
                                 except ColorParseError:
                                     raise PysentationPropertyError(
-                                        f"'{value}' in slide {slide_number}, line {lineno} is not a valid color."
+                                        (f"The '{value}' in slide {slide_number}, line {lineno} is not a valid color for '{prop}' property.\n"
+                                         "Acceptable colors: https://github.com/mimseyedi/pysentation#colors")
                                     )
                             elif prop in ["interpretable", 'expand']:
                                 if value.strip() not in ['True', 'False']:
                                     raise PysentationPropertyError(
-                                        f"'{prop}' in slide {slide_number}, line {lineno} must be of type bool."
+                                        f"The value of '{prop}' property in slide {slide_number}, line {lineno} must be in bool[True/False] type."
                                     )
                                 else:
                                     value = 'True' if value.strip() == 'True' else ''
@@ -559,7 +560,7 @@ class Pysentation:
 
                         else:
                             raise PysentationPropertyError(
-                                f"Undefined property or invalid value in slide {slide_number}, line {lineno} -> '{prop}'",
+                                f"invalid/Empty value for '{prop}' property in slide {slide_number}, line {lineno}.",
                             )
                     else:
                         raise PysentationPropertyError(
