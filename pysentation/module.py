@@ -88,22 +88,6 @@ class PysentationSlide:
         self.interpretable = interpretable
         self.__h_line: int = 1
         self.__code_index: int = 0
-        self.__codes: list = [
-            element for element in self.content if isinstance(element, Syntax)
-        ]
-
-        for element in self.content:
-            if isinstance(element, Syntax):
-                element.highlight_lines = {self.__h_line}
-                break
-
-    def render(self) -> Panel:
-        """
-        The task of this method is to render the PysentationSlide and turn it into a panel of the rich module.
-        By turning PysentationSlide into a panel, it is possible for the slide to be displayed correctly by a PysentationScreen object.
-
-        :return: rich.Panel
-        """
 
         if self.interpretable:
             for index, element in enumerate(self.content):
@@ -121,6 +105,18 @@ class PysentationSlide:
                     self.content.insert(index + 2, output_panel)
 
         self.__fix_syntax_highlighter()
+
+        self.__codes: list = [
+            element for element in self.content if isinstance(element, Syntax)
+        ]
+
+    def render(self) -> Panel:
+        """
+        The task of this method is to render the PysentationSlide and turn it into a panel of the rich module.
+        By turning PysentationSlide into a panel, it is possible for the slide to be displayed correctly by a PysentationScreen object.
+
+        :return: rich.Panel
+        """
 
         return Panel(
             Group(
@@ -144,17 +140,18 @@ class PysentationSlide:
         :return: None
         """
 
-        if self.__h_line > 1:
-            self.__h_line -= 1
-        else:
-            if self.__code_index - 1 == -1:
-                self.__codes[self.__code_index].highlight_lines = {}
-                self.__code_index = len(self.__codes) - 1
-                self.__h_line = len(self.__codes[self.__code_index].code.split("\n"))
+        if self.__codes:
+            if self.__h_line > 1:
+                self.__h_line -= 1
             else:
-                self.__codes[self.__code_index].highlight_lines = {}
-                self.__code_index -= 1
-                self.__h_line = len(self.__codes[self.__code_index].code.split("\n"))
+                if self.__code_index - 1 == -1:
+                    self.__codes[self.__code_index].highlight_lines = {}
+                    self.__code_index = len(self.__codes) - 1
+                    self.__h_line = len(self.__codes[self.__code_index].code.split("\n"))
+                else:
+                    self.__codes[self.__code_index].highlight_lines = {}
+                    self.__code_index -= 1
+                    self.__h_line = len(self.__codes[self.__code_index].code.split("\n"))
 
             self.__codes[self.__code_index].highlight_lines = {self.__h_line}
 
@@ -166,19 +163,20 @@ class PysentationSlide:
         :return: None
         """
 
-        if self.__h_line < len(self.__codes[self.__code_index].code.split("\n")):
-            self.__h_line += 1
-        else:
-            if self.__code_index + 1 < len(self.__codes):
-                self.__codes[self.__code_index].highlight_lines = {}
-                self.__code_index += 1
-                self.__h_line = 1
+        if self.__codes:
+            if self.__h_line < len(self.__codes[self.__code_index].code.split("\n")):
+                self.__h_line += 1
             else:
-                self.__codes[self.__code_index].highlight_lines = {}
-                self.__code_index = 0
-                self.__h_line = 1
+                if self.__code_index + 1 < len(self.__codes):
+                    self.__codes[self.__code_index].highlight_lines = {}
+                    self.__code_index += 1
+                    self.__h_line = 1
+                else:
+                    self.__codes[self.__code_index].highlight_lines = {}
+                    self.__code_index = 0
+                    self.__h_line = 1
 
-        self.__codes[self.__code_index].highlight_lines = {self.__h_line}
+            self.__codes[self.__code_index].highlight_lines = {self.__h_line}
 
     @staticmethod
     def interpret(source: str) -> tuple[bool, str]:
@@ -190,7 +188,7 @@ class PysentationSlide:
         :return: tuple[bool, str]
         """
 
-        output, output_file = None, Path(Path(__file__), ".output.txt")
+        output, output_file = None, Path(Path(__file__).parent, ".output.txt")
         c_stdout: sys.stdout = sys.stdout
         sys.stdout = open(file=output_file, mode='w+')
 
@@ -222,7 +220,7 @@ class PysentationSlide:
             trace_back = traceback.extract_tb(ex_traceback)
 
             output = (f"Exception Type: {ex_type.__name__}\n"
-                      f"Exception Message: {ex_value}\n"
+                      f"Exception Message: {ex_value if ex_value.__str__() else 'None'}\n"
                       f"Scope {trace_back[1].name}, Line {trace_back[1].lineno}")
         finally:
             if output:
@@ -241,6 +239,8 @@ class PysentationSlide:
 
         self.__h_line = 1
         self.__code_index = 0
+        self.go_up()
+        self.go_down()
 
     def __fix_syntax_highlighter(self) -> None:
         """
@@ -250,17 +250,21 @@ class PysentationSlide:
         :return: None
         """
 
+        first_syntax_highlighter: bool = True
+
         for index, element in enumerate(self.content):
             if isinstance(element, Syntax):
                 self.content[index] = Syntax(
                     code=element.code,
                     lexer='python',
                     line_numbers=True,
+                    highlight_lines={1 if first_syntax_highlighter else None},
                     start_line=1,
                     indent_guides=True,
                     background_color=self.code_bg_color,
                     theme=self.code_theme,
                 )
+                first_syntax_highlighter = False
 
     def __add__(self, other):
         return PysentationSlide(
@@ -351,6 +355,46 @@ class PysentationScreen:
             self.__slideno -= 1
             self.display()
 
+    def highlight_top_line(self) -> None:
+        """
+        The task of this method is to highlight the upper line of the syntax highlighter of the current slide.
+
+        :return: None
+        """
+
+        self.slides[self.__slideno].go_up()
+        self.display()
+
+    def highlight_bottom_line(self) -> None:
+        """
+        The task of this method is to highlight the bottom line of the syntax highlighter of the current slide.
+
+        :return: None
+        """
+
+        self.slides[self.__slideno].go_down()
+        self.display()
+
+    def first_slide(self) -> None:
+        """
+        The task of this method is to display the first slide on the screen.
+
+        :return: None
+        """
+
+        self.__slideno = 0
+        self.display()
+
+    def last_slide(self) -> None:
+        """
+        The task of this method is to display the last slide on the screen.
+
+        :return: None
+        """
+
+        self.__slideno = len(self.slides) - 1
+        self.display()
+
     def reset_slide(self) -> None:
         """
         The task of this method is to reset the current PysentationSlide.
@@ -372,6 +416,10 @@ class PysentationScreen:
         """
 
         self.__slideno = 0
+
+        for slide in self.slides:
+            slide.reset_slide()
+
         self.display()
 
     def __eq__(self, other):
@@ -464,11 +512,12 @@ class Pysentation:
         return slides
 
     @staticmethod
-    def extract_props(slide: list[str]) -> dict:
+    def extract_props(slide: list[str], slide_number: str) -> dict:
         """
         The task of this method is to extract and validate the properties of a slide.
 
         :param slide: A text-base slide separated by the self.separator method
+        :param slide_number: The number of slide in string [./.].
         :return: dict
         """
 
@@ -496,12 +545,12 @@ class Pysentation:
                                     Style(bgcolor=value)
                                 except ColorParseError:
                                     raise PysentationPropertyError(
-                                        f"'{value}' in line {lineno} is not a valid color."
+                                        f"'{value}' in slide {slide_number}, line {lineno} is not a valid color."
                                     )
                             elif prop in ["interpretable", 'expand']:
                                 if value.strip() not in ['True', 'False']:
                                     raise PysentationPropertyError(
-                                        f"'{prop}' in line {lineno} must be of type bool."
+                                        f"'{prop}' in slide {slide_number}, line {lineno} must be of type bool."
                                     )
                                 else:
                                     value = 'True' if value.strip() == 'True' else ''
@@ -510,16 +559,16 @@ class Pysentation:
 
                         else:
                             raise PysentationPropertyError(
-                                f"Undefined property or invalid value in line {lineno} -> {prop}",
+                                f"Undefined property or invalid value in slide {slide_number}, line {lineno} -> '{prop}'",
                             )
                     else:
                         raise PysentationPropertyError(
-                            f"There is no such property in line {lineno} -> {prop}"
+                            f"There is no such property in slide {slide_number}, line {lineno} -> '{prop}'"
                         )
 
                 except IndexError:
                     raise PysentationPropertyError(
-                        f"Undefined property or invalid value in line {lineno}."
+                        f"Undefined property or invalid value in slide {slide_number}, line {lineno}."
                     )
 
         return props
@@ -599,8 +648,10 @@ class Pysentation:
         :return: PysentationSlide
         """
 
-        props: dict = self.extract_props(slide=slide)
-
+        props: dict = self.extract_props(
+            slide=slide,
+            slide_number=slide_number
+        )
         content: list = self.modified_content(
             content=self.extract_content(
                 slide=slide
