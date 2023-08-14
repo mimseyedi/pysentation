@@ -120,6 +120,10 @@ To use **pysentation**, you first need a **pysentation file**. The pysentation f
 ## Colors and themes <a class="anchor" id="colors_and_themes"></a>
 
 ## Colors <a class="anchor" id="colors"></a>
+This is a list of **16** main colors that you can **use** in pysentation. You can see the information of more diverse colors from <a href="https://rich.readthedocs.io/en/stable/appendix/colors.html#appendix-colors">here</a>.
+
+**Note: To use any color, you can mention its name, number, hex code and rgb number.**
+
 | Color                                                     | Name             | Number | Hex | RGB  |
 |-----------------------------------------------------------|------------------|--------| --- |------|
 | ![#000000](https://placehold.co/205x30/000000/000000.png) | "black"          | 0      |-|-|
@@ -138,7 +142,13 @@ To use **pysentation**, you first need a **pysentation file**. The pysentation f
 | ![#ff00ff](https://placehold.co/205x30/ff00ff/ff00ff.png) | "bright_magenta" | 13     |-|-|
 | ![#00ffff](https://placehold.co/205x30/00ffff/00ffff.png) | "bright_cyan"    | 14     |-|-|
 | ![#ffffff](https://placehold.co/205x30/ffffff/ffffff.png) | "bright_white"   | 15     |-|-|
+
 ## Themes <a class="anchor" id="themes"></a>
+You can see the available themes from this list:
+
+| Name |Light|Dark|
+|------|---|---|
+| bw   |:heavy_check_mark:||
 
 ## Bugs/Requests <a class="anchor" id="bugs_requests"></a>
 
