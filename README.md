@@ -170,7 +170,7 @@ You can see the available themes from this list:
 | one-dark       |                    | :heavy_check_mark: |
 | dracula        |                    | :heavy_check_mark: |
 
-
+Visit here for more: https://pygments.org/styles/ 
 
 ## Bugs/Requests <a class="anchor" id="bugs_requests"></a>
 
