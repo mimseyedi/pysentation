@@ -144,7 +144,9 @@ This is a list of **16** main colors that you can **use** in pysentation. You ca
 | ![#ffffff](https://placehold.co/205x20/ffffff/ffffff.png) | "bright_white"   | 15     |-|-|
 
 ## Themes <a class="anchor" id="themes"></a>
-You can see the available themes from this list:
+**Popular** and **high-quality** themes are listed so that you can **use** them. Visit <a href="https://pygments.org/styles/">here</a> for more.
+
+**Note: To use these themes, you must mention its full name, and in case of mistake, the default theme will be selected.**
 
 | Name           | Light              | Dark               |
 |----------------|--------------------|--------------------|
@@ -170,8 +172,8 @@ You can see the available themes from this list:
 | one-dark       |                    | :heavy_check_mark: |
 | dracula        |                    | :heavy_check_mark: |
 
-Visit here for more: https://pygments.org/styles/ 
-
 ## Bugs/Requests <a class="anchor" id="bugs_requests"></a>
+Please send **bug reports** and **feature** requests through <a href="https://github.com/mimseyedi/pysentation/issues">github issue tracker</a>.
 
 ## License <a class="anchor" id="license"></a>
+**pysentation** is a **free** and **open source** project under the **GPL-3** LICENSE. Any **contribution** is welcome. You can do this by **registering** a **pull request**.
