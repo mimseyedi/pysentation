@@ -120,25 +120,24 @@ To use **pysentation**, you first need a **pysentation file**. The pysentation f
 ## Colors and themes <a class="anchor" id="colors_and_themes"></a>
 
 ## Colors <a class="anchor" id="colors"></a>
-| Color with name                                         | Number | Hex | RGB  |
-|---------------------------------------------------------|--------| --- |------|
-| <p style="background-color: #000000">black</p>          | 0      |-|-|
-|![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png) |1|-|-|
-| <p style="background-color: #800000">red</p>            | 1      |-|-|
-| <p style="background-color: #008000">green</p>          | 2      |-|-|
-| <p style="background-color: #808000">yellow</p>         | 3      |-|-|
-| <p style="background-color: #000080">blue</p>           | 4      |-|-|
-| <p style="background-color: #800080">magenta</p>        | 5      |-|-|
-| <p style="background-color: #008080">cyan</p>           | 6      |-|-|
-| <p style="background-color: #c0c0c0">white</p>          | 7      |-|-|
-| <p style="background-color: #808080">bright_black</p>   | 8      |-|-|
-| <p style="background-color: #ff0000">bright_red</p>     | 9      |-|-|
-| <p style="background-color: #00ff00">bright_green</p>   | 10     |-|-|
-| <p style="background-color: #ffff00">bright_yellow</p>  | 11     |-|-|
-| <p style="background-color: #0000ff">bright_blue</p>    | 12     |-|-|
-| <p style="background-color: #ff00ff">bright_magenta</p> | 13     |-|-|
-| <p style="background-color: #00ffff">bright_cyan</p>    | 14     |-|-|
-| <p style="background-color: #ffffff">bright_white</p>   | 15     |-|-|
+| Color                                                     | Name             | Number | Hex | RGB  |
+|-----------------------------------------------------------|------------------|--------| --- |------|
+| ![#000000](https://placehold.co/205x70/000000/000000.png) | "black"          | -      |-|
+| ![#800000](https://placehold.co/205x70/800000/800000.png)  | "red"            | -      |-|
+| ![#008000](https://placehold.co/205x70/008000/008000.png)  | "green"          | -      |-|
+| ![#808000](https://placehold.co/205x70/808000/808000.png)  | "yellow"         | -      |-|
+| ![#000080](https://placehold.co/205x70/000080/000080.png)  | "blue"           | -      |-|
+| ![#800080](https://placehold.co/205x70/800080/800080.png)  | "magenta"        | -      |-|
+| ![#008080](https://placehold.co/205x70/008080/008080.png)  | "cyan"           | -      |-|
+| ![#c0c0c0](https://placehold.co/205x70/c0c0c0/c0c0c0.png)  | "white"          | -      |-|
+| ![#808080](https://placehold.co/205x70/808080/808080.png)  | "bright_black"   | -      |-|
+| ![#ff0000](https://placehold.co/205x70/ff0000/ff0000.png)  | "bright_red"     | -      |-|
+| ![#00ff00](https://placehold.co/205x70/00ff00/00ff00.png)  | "bright_green"   | -      |-|
+| ![#ffff00](https://placehold.co/205x70/ffff00/ffff00.png)  | "bright_yellow"  | -      |-|
+| ![#0000ff](https://placehold.co/205x70/0000ff/0000ff.png)  | "bright_blue"    | -      |-|
+| ![#ff00ff](https://placehold.co/205x70/ff00ff/ff00ff.png)  | "bright_magenta" | -      |-|
+| ![#00ffff](https://placehold.co/205x70/00ffff/00ffff.png)  | "bright_cyan"    | -      |-|
+| ![#ffffff](https://placehold.co/205x70/ffffff/ffffff.png)  | "bright_white"   | -      |-|
 ## Themes <a class="anchor" id="themes"></a>
 
 ## Bugs/Requests <a class="anchor" id="bugs_requests"></a>
