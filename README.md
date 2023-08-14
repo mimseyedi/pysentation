@@ -123,6 +123,7 @@ To use **pysentation**, you first need a **pysentation file**. The pysentation f
 | Color with name                                         | Number | Hex | RGB  |
 |---------------------------------------------------------|--------| --- |------|
 | <p style="background-color: #000000">black</p>          | 0      |-|-|
+|- ![#f03c15](https://placehold.co/15x15/f03c15/f03c15.png)|1|-|-|
 | <p style="background-color: #800000">red</p>            | 1      |-|-|
 | <p style="background-color: #008000">green</p>          | 2      |-|-|
 | <p style="background-color: #808000">yellow</p>         | 3      |-|-|
