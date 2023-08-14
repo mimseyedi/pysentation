@@ -146,9 +146,31 @@ This is a list of **16** main colors that you can **use** in pysentation. You ca
 ## Themes <a class="anchor" id="themes"></a>
 You can see the available themes from this list:
 
-| Name |Light|Dark|
-|------|---|---|
-| bw   |:heavy_check_mark:||
+| Name           | Light              | Dark               |
+|----------------|--------------------|--------------------|
+| bw             | :heavy_check_mark: |                    |
+| sas            | :heavy_check_mark: |                    |
+| staroffice     | :heavy_check_mark: | :heavy_check_mark: |
+| xcode          | :heavy_check_mark: |                    |
+| default        | :heavy_check_mark: |                    |
+| monokai        |                    | :heavy_check_mark: |
+| lightbulb      | :heavy_check_mark: |                    |
+| github-dark    |                    | :heavy_check_mark: |
+| rrt            |                    | :heavy_check_mark: |
+| gruvbox-dark   |                    | :heavy_check_mark: |
+| gruvbox-light  | :heavy_check_mark: |                    |
+| solarized-light | :heavy_check_mark: |                    |
+| solarized-dark |                    | :heavy_check_mark: |
+| nord           |                    | :heavy_check_mark: |
+| paraiso-light  | :heavy_check_mark: |                    |
+| paraiso-dark   |                    | :heavy_check_mark: |
+| autumn         | :heavy_check_mark: |                    |
+| vim            |                    | :heavy_check_mark: |
+| vs             | :heavy_check_mark: |                    |
+| one-dark       |                    | :heavy_check_mark: |
+| dracula        |                    | :heavy_check_mark: |
+
+
 
 ## Bugs/Requests <a class="anchor" id="bugs_requests"></a>
 
