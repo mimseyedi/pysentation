@@ -218,7 +218,7 @@ If this property is `True`, all the **codes** inside a slide will be **interpret
 ```
 
 ## Comments <a class="anchor" id="comments"></a>
-The comments are actually the explanations that we can see in the slides. The content of the comments can be anything and can be given different modes according to the styles of the rich module.
+The **comments** are actually the explanations that we can see in the **slides**. The content of the comments can be **anything** and can be given different modes according to the **styles** of the <a href="https://github.com/Textualize/rich">rich</a> module.
 
 Comments start with `#:`: 
 ```python
@@ -237,7 +237,7 @@ Output:
 ![img4](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-comment-example.png)
 
 ## Codes <a class="anchor" id="codes"></a>
-The codes have no special characteristics and can be easily written and interpreted if needed:
+The codes have no **special characteristics** and can be easily written and **interpreted** if needed:
 ```python
 #pysentation{
 
@@ -273,7 +273,7 @@ Output:
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
-Even if the code raises an exception, the error message will be displayed:
+Even if the code **raises** an **exception**, the **error message** will be displayed:
 ```python
 #pysentation{
 
@@ -308,12 +308,53 @@ Output:
 ```
 
 ## Slideshow screen <a class="anchor" id="slideshow"></a>
+The **slideshow screen** is the **main** screen for displaying slides. When we have prepared a **pysentation file**, we can **run** the slides with the help of the following **command** and **manage** it with the help of special **keys**:
+```
+pysentation my_file.py
+```
 
 ## Hot keys <a class="anchor" id="hot_keys"></a>
+The following table introduces the **hot keys**:
+
+| Key       | Action                   |
+|-----------|--------------------------|
+| Right →   | Next slide.              |
+| Left  ←   | Previous slide.          |
+| Up ↑      | Highlight top line.      |
+| Down ↓    | Highlight bottom line.   |
+| r         | Reset the current slide. |
+| shift + r | Reset the screen.        |
+| f         | Go to first slide.       |
+| l         | Go to last slide.        |
+| q         | Quit.                    |
 
 ## Options <a class="anchor" id="options"></a>
+**Options** are **settings** that can be **set** before **running** the **screen** and **slides**.
+
+You can use `-h` or `--help` to see them:
+
+```
+pysentation --help
+```
+
+Output:
+```
+Options:
+  -f, --from INTEGER      Start showing the screen from the selected slide.
+  -c, --color TEXT        Set color for all slides.
+  -t, --theme TEXT        Set syntax highlighter theme for all slides.
+  -d, --disable           Disable code interpretation for all slides.
+  -p, --property INTEGER  Display the properties of the selected slide.
+  -s, --slides            Display the slides on the screen with their
+                          position.
+  -o, --output PATH       Writing all slides in order in a text file.
+  -v, --version           Display the current version of pysentation installed
+                          on the system.
+  -h, --help              Show this message and exit.
+```
 
 ## Colors and themes <a class="anchor" id="colors_and_themes"></a>
+There are many **colors** and **themes** to use in **pysentation** that all follow the <a href="https://github.com/Textualize/rich">rich</a> module. They are mentioned below.
 
 ## Colors <a class="anchor" id="colors"></a>
 This is a list of **16** main colors that you can **use** in pysentation. You can see the information of more diverse colors from <a href="https://rich.readthedocs.io/en/stable/appendix/colors.html#appendix-colors">here</a>.
