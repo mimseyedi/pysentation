@@ -234,18 +234,7 @@ Comments start with `#:`:
 ```
 
 Output:
-```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Wonderful slide ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                                                              ┃
-┃  Hello!, this is my wonderfull slide.                                        ┃
-┃                                                                              ┃
-┃  Yes, you see right! I am a comment that can be displayed!                   ┃
-┃                                                                              ┃
-┃  Also, I can make the word "can" underline style like this.                  ┃
-┃                                                                              ┃
-┃                                                                              ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
-```
+![img4](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-comment-example.png)
 
 ## Codes <a class="anchor" id="codes"></a>
 The codes have no special characteristics and can be easily written and interpreted if needed:
@@ -254,7 +243,7 @@ The codes have no special characteristics and can be easily written and interpre
 
 #>slide
 #-title: Legal age
-#: Here is a simple example of [bold]if[/bold] and [bold]else[/bold] statements:
+#: Here is a simple example of if and else statements:
 age = 19
 if age >= 18:
     print("Access Granted!")
@@ -266,21 +255,22 @@ else:
 
 Output:
 ```
-┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Legal age ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
-┃                                                                              ┃
-┃  Here is a simple example of if and else statements:                         ┃
-┃                                                                              ┃
-┃ ❱ 1 age = 19                                                                 ┃
-┃   2 if age >= 18:                                                            ┃
-┃   3 │   print("Access Granted!")                                             ┃
-┃   4 else:                                                                    ┃
-┃   5 │   print("Access Denied! Underage")                                     ┃
-┃                                                                              ┃
-┃ ╭─ Output ─────────────────────────────────────────────────────────────────╮ ┃
-┃ │ Access Granted!                                                          │ ┃
-┃ ╰──────────────────────────────────────────────────────────────────────────╯ ┃
-┃                                                                              ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Legal age ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                             ┃
+┃  Here is a simple example of if and else statements:                                        ┃
+┃                                                                                             ┃
+┃ ❱ 1 age = 19                                                                                ┃
+┃   2 if age >= 18:                                                                           ┃
+┃   3 │   print("Access Granted!")                                                            ┃
+┃   4 else:                                                                                   ┃
+┃   5 │   print("Access Denied! Underage")                                                    ┃
+┃   6                                                                                         ┃
+┃                                                                                             ┃
+┃ ╭─ Output ────────────────────────────────────────────────────────────────────────────────╮ ┃
+┃ │ Access Granted!                                                                         │ ┃
+┃ ╰─────────────────────────────────────────────────────────────────────────────────────────╯ ┃
+┃                                                                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
 Even if the code raises an exception, the error message will be displayed:
@@ -299,22 +289,22 @@ print(div(4, 0))
 
 Output:
 ```
-┏━━━━━━━━━━━━━━━━━━━━ About ERRORS and how to display them ━━━━━━━━━━━━━━━━━━━━┓
-┃                                                                              ┃
-┃  Pay attention to the following example of how errors are displayed:         ┃
-┃                                                                              ┃
-┃   1 def div(a, b):                                                           ┃
-┃   2 │   return a / b                                                         ┃
-┃   3 # Division by zero                                                       ┃
-┃ ❱ 4 print(div(4, 0))                                                         ┃
-┃                                                                              ┃
-┃ ╭─ <Error> ────────────────────────────────────────────────────────────────╮ ┃
-┃ │ Exception Type: ZeroDivisionError                                        │ ┃
-┃ │ Exception Message: division by zero                                      │ ┃
-┃ │ Scope <module>, Line 4                                                   │ ┃
-┃ ╰──────────────────────────────────────────────────────────────────────────╯ ┃
-┃                                                                              ┃
-┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━ About ERRORS and how to display them ━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                             ┃
+┃  Pay attention to the following example of how errors are displayed:                        ┃
+┃                                                                                             ┃
+┃ ❱ 1 def div(a, b):                                                                          ┃
+┃   2 │   return a / b                                                                        ┃
+┃   3 # Division by zero                                                                      ┃
+┃   4 print(div(4, 0))                                                                        ┃
+┃                                                                                             ┃
+┃ ╭─ <Error> ───────────────────────────────────────────────────────────────────────────────╮ ┃
+┃ │ Exception Type: ZeroDivisionError                                                       │ ┃
+┃ │ Exception Message: division by zero                                                     │ ┃
+┃ │ Scope <module>, Line 4                                                                  │ ┃
+┃ ╰─────────────────────────────────────────────────────────────────────────────────────────╯ ┃
+┃                                                                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
 ## Slideshow screen <a class="anchor" id="slideshow"></a>
