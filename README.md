@@ -90,26 +90,232 @@ Enjoy it!
 To use **pysentation**, you first need a **pysentation file**. The pysentation file is actually a **Python file**. But it follows **rules** that can be converted into a **slideshow** and interpreted by **pysentation CLI**.
 
 ## pysentation scope <a class="anchor" id="scope"></a>
+A **pysentation** file consists of a **pysentation** scope. Specifying the scope of the pysentation is mandatory so that the **interpretation** can be done correctly:
+```python
+#pysentation{
+...
+#pysentation}
+```
+
+This **range** specifies the **presentation environment**. All pysentation **commands** and attributes in a **python file** are a python **comment**, but they have **special names** so that they can be **interpreted** correctly.
 
 ## Slides <a class="anchor" id="slides"></a>
+Each **pysentation** consists of one or more **slides**. To make a **slide**, just do the following:
+```python
+#pysentation{
+
+#>slide
+...
+
+#pysentation}
+```
+Now, after `#>slide`, you can **define** slide **properties** and slide **elements**, which we will explain below.
+
+You can also define **several** slides in **one scope**:
+```python
+#pysentation{
+
+#>slide
+...
+
+#>slide
+...
+
+#>slide
+...
+
+#pysentation}
+```
 
 ## Properties <a class="anchor" id="props"></a>
+Each slide has properties that can change the presentation of the slide. These properties are listed in the table below, which I will examine one by one in the following:
+
+|Property| Action                                                                                                                                     | Definition form        |Default value|
+|---|--------------------------------------------------------------------------------------------------------------------------------------------|------------------------|---|
+|Title| You can change the title of the slide with this property.                                                                                  | #-title: Slide's Title |none|
+|Title align| You can change the slide title align with this property.                                                                                   | #-title_align: left    |center|
+|Color| You can change the color of the slide with this property.                                                                                  | #-color: green         |default|
+|Theme| You can change the theme of syntax highlighters of the slide with this property.                                                           | #-theme: github-dark   |gruvbox-dark|
+|Expand| With this property, it can be specified that the slide box is the same width as the screen or stretched to the size of the slide elements. | #-expand: True         |True|
+|Interpretable| With this property, it is possible to determine whether the codes inside the slide are interpreted and their output is displayed or not.   | #-interpretable: False |True|
+
+**Note: Properties are case sensitive and must be written as defined.**
 
 ## Title <a class="anchor" id="title"></a>
+This feature refers to the slide:
+```python
+#pysentation{
+
+#>slide
+#-title: First slide
+
+#pysentation}
+```
+
+Output:
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ First slide ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                             ┃
+┃                                                                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 
 ## Title align <a class="anchor" id="title_align"></a>
+This property specifies the **location** of the slide **title** and it can be defined in **three** modes: `right`, `center` and `left` **(The default value is `center`)**:
+```python
+#pysentation{
+
+#>slide
+#-title: First slide
+#-title_align: left
+
+#pysentation}
+```
+
+Output:
+```
+┏━ First slide ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                             ┃
+┃                                                                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
+
 
 ## Color <a class="anchor" id="color"></a>
+This property refers to the **color** of the slide and its **components** **(The default value is equal to `default` or color of the terminal font)**:
+
+
+Click <a href="#colors">here</a> to view the available colors.
 
 ## Theme <a class="anchor" id="theme"></a>
+This property refers to the **theme** of the **syntax highlighters** in the slide **(The default value is `gruvbox-dark`)**:
+
+
+Click <a href="#themes">here</a> to view the available themes.
 
 ## Expand <a class="anchor" id="expand"></a>
+By setting this property to `True` or `False`, you can specify whether the **size** of the slide is the same as the size of the **screen** or the size of the **elements** inside it **(The default value is `True`)**:
+
+```python
+#pysentation{
+
+#>slide
+#-expand: False
+
+#pysentation}
+```
 
 ## Interpretable <a class="anchor" id="interpretable"></a>
+If this property is `True`, all the **codes** inside a slide will be **interpreted separately** with the help of **Python interpreter** and the **output** will be **displayed** under them in a **separate box**. But if its value is `False`, it will not do this **(The default value is `True`)**:
+
+```python
+#pysentation{
+
+#>slide
+#-interpretable: False
+
+#pysentation}
+```
 
 ## Comments <a class="anchor" id="comments"></a>
+The comments are actually the explanations that we can see in the slides. The content of the comments can be anything and can be given different modes according to the styles of the rich module.
+
+Comments start with `#:`: 
+```python
+#pysentation{
+
+#>slide
+#-title: Wonderful slide
+#: Hello!, this is my wonderfull slide.
+#: Yes, you see right! I am a comment that can be displayed!
+#: Also, I can make the word [yellow]"can"[/yellow] yellow like this.
+
+#pysentation}
+```
+
+Output:
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Wonderful slide ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                              ┃
+┃  Hello!, this is my wonderfull slide.                                        ┃
+┃                                                                              ┃
+┃  Yes, you see right! I am a comment that can be displayed!                   ┃
+┃                                                                              ┃
+┃  Also, I can make the word "can" underline style like this.                  ┃
+┃                                                                              ┃
+┃                                                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 
 ## Codes <a class="anchor" id="codes"></a>
+The codes have no special characteristics and can be easily written and interpreted if needed:
+```python
+#pysentation{
+
+#>slide
+#-title: Legal age
+#: Here is a simple example of [bold]if[/bold] and [bold]else[/bold] statements:
+age = 19
+if age >= 18:
+    print("Access Granted!")
+else:
+    print("Access Denied! Underage")
+    
+#pysentation}
+```
+
+Output:
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ Legal age ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                              ┃
+┃  Here is a simple example of if and else statements:                         ┃
+┃                                                                              ┃
+┃ ❱ 1 age = 19                                                                 ┃
+┃   2 if age >= 18:                                                            ┃
+┃   3 │   print("Access Granted!")                                             ┃
+┃   4 else:                                                                    ┃
+┃   5 │   print("Access Denied! Underage")                                     ┃
+┃                                                                              ┃
+┃ ╭─ Output ─────────────────────────────────────────────────────────────────╮ ┃
+┃ │ Access Granted!                                                          │ ┃
+┃ ╰──────────────────────────────────────────────────────────────────────────╯ ┃
+┃                                                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
+
+Even if the code raises an exception, the error message will be displayed:
+```python
+#pysentation{
+
+#>slide
+#-title: About [italic]ERRORS[/italic] and how to display them
+#: Pay attention to the following example of how errors are displayed:
+def div(a, b):
+    return a / b
+# Division by zero
+print(div(4, 0))
+#pysentation}
+```
+
+Output:
+```
+┏━━━━━━━━━━━━━━━━━━━━ About ERRORS and how to display them ━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                              ┃
+┃  Pay attention to the following example of how errors are displayed:         ┃
+┃                                                                              ┃
+┃   1 def div(a, b):                                                           ┃
+┃   2 │   return a / b                                                         ┃
+┃   3 # Division by zero                                                       ┃
+┃ ❱ 4 print(div(4, 0))                                                         ┃
+┃                                                                              ┃
+┃ ╭─ <Error> ────────────────────────────────────────────────────────────────╮ ┃
+┃ │ Exception Type: ZeroDivisionError                                        │ ┃
+┃ │ Exception Message: division by zero                                      │ ┃
+┃ │ Scope <module>, Line 4                                                   │ ┃
+┃ ╰──────────────────────────────────────────────────────────────────────────╯ ┃
+┃                                                                              ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
 
 ## Slideshow screen <a class="anchor" id="slideshow"></a>
 
