@@ -35,6 +35,10 @@ pysentation, by taking a Python file written with simple but specific rules, can
 
 Follow the documentation or read <a href="#">this</a> section for more information.
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Installation <a class="anchor" id="install"></a>
 You can use **pip** to install:
 ```
@@ -67,6 +71,10 @@ You can still do it yourself without needing the `requirements.txt` file:
 python3 -m pip install rich==13.4.1 getkey==0.6.5 click==8.1.3
 ```
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## How to use pysentation? <a class="anchor" id="usage"></a>
 There are two ways to use pysentation!
 
@@ -86,10 +94,16 @@ Then after you install **pysentation**, run the file you downloaded with the **p
 pysentation train_journey.py
 ```
 
-Enjoy it!
+<br />
+
+[↑ Table of contents](#contents)
 
 ## pysentation file <a class="anchor" id="pysentation_file"></a>
 To use **pysentation**, you first need a **pysentation file**. The pysentation file is actually a **Python file**. But it follows **rules** that can be converted into a **slideshow** and interpreted by **pysentation CLI**.
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## pysentation scope <a class="anchor" id="scope"></a>
 A **pysentation** file consists of a **pysentation** scope. Specifying the scope of the pysentation is mandatory so that the **interpretation** can be done correctly:
@@ -100,6 +114,10 @@ A **pysentation** file consists of a **pysentation** scope. Specifying the scope
 ```
 
 This **range** specifies the **presentation environment**. All pysentation **commands** and attributes in a **python file** are a python **comment**, but they have **special names** so that they can be **interpreted** correctly.
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Slides <a class="anchor" id="slides"></a>
 Each **pysentation** consists of one or more **slides**. To make a **slide**, just do the following:
@@ -129,6 +147,10 @@ You can also define **several** slides in **one scope**:
 #pysentation}
 ```
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Properties <a class="anchor" id="props"></a>
 Each slide has properties that can change the presentation of the slide. These properties are listed in the table below, which I will examine one by one in the following:
 
@@ -142,6 +164,10 @@ Each slide has properties that can change the presentation of the slide. These p
 |Interpretable| With this property, it is possible to determine whether the codes inside the slide are interpreted and their output is displayed or not.   | #-interpretable: False |True|
 
 **Note: Properties are case sensitive and must be written as defined.**
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Title <a class="anchor" id="title"></a>
 This feature refers to the slide:
@@ -161,6 +187,10 @@ Output:
 ┃                                                                                             ┃
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Title align <a class="anchor" id="title_align"></a>
 This property specifies the **location** of the slide **title** and it can be defined in **three** modes: `right`, `center` and `left` **(The default value is `center`)**:
@@ -182,6 +212,9 @@ Output:
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Color <a class="anchor" id="color"></a>
 This property refers to the **color** of the slide and its **components** **(The default value is equal to `default` or color of the terminal font)**:
@@ -189,12 +222,19 @@ This property refers to the **color** of the slide and its **components** **(The
 
 Click <a href="#colors">here</a> to view the available colors.
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Theme <a class="anchor" id="theme"></a>
 This property refers to the **theme** of the **syntax highlighters** in the slide **(The default value is `gruvbox-dark`)**:
 ![img3](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/theme-example.png)
 
 Click <a href="#themes">here</a> to view the available themes.
 
+<br />
+
+[↑ Table of contents](#contents)
 ## Expand <a class="anchor" id="expand"></a>
 By setting this property to `True` or `False`, you can specify whether the **size** of the slide is the same as the size of the **screen** or the size of the **elements** inside it **(The default value is `True`)**:
 
@@ -207,6 +247,10 @@ By setting this property to `True` or `False`, you can specify whether the **siz
 #pysentation}
 ```
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Interpretable <a class="anchor" id="interpretable"></a>
 If this property is `True`, all the **codes** inside a slide will be **interpreted separately** with the help of **Python interpreter** and the **output** will be **displayed** under them in a **separate box**. But if its value is `False`, it will not do this **(The default value is `True`)**:
 
@@ -218,6 +262,10 @@ If this property is `True`, all the **codes** inside a slide will be **interpret
 
 #pysentation}
 ```
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Comments <a class="anchor" id="comments"></a>
 The **comments** are actually the explanations that we can see in the **slides**. The content of the comments can be **anything** and can be given different modes according to the **styles** of the <a href="https://github.com/Textualize/rich">rich</a> module.
@@ -237,6 +285,10 @@ Comments start with `#:`:
 
 Output:
 ![img4](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-comment-example.png)
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Codes <a class="anchor" id="codes"></a>
 The codes have no **special characteristics** and can be easily written and **interpreted** if needed:
@@ -309,11 +361,19 @@ Output:
 ┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
 ```
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Slideshow screen <a class="anchor" id="slideshow"></a>
 The **slideshow screen** is the **main** screen for displaying slides. When we have prepared a **pysentation file**, we can **run** the slides with the help of the following **command** and **manage** it with the help of special **keys**:
 ```
 pysentation my_file.py
 ```
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Hot keys <a class="anchor" id="hot_keys"></a>
 The following table introduces the **hot keys**:
@@ -329,6 +389,10 @@ The following table introduces the **hot keys**:
 | f         | Go to first slide.       |
 | l         | Go to last slide.        |
 | q         | Quit.                    |
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Options <a class="anchor" id="options"></a>
 **Options** are **settings** that can be **set** before **running** the **screen** and **slides**.
@@ -355,8 +419,16 @@ Options:
   -h, --help              Show this message and exit.
 ```
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Colors and themes <a class="anchor" id="colors_and_themes"></a>
 There are many **colors** and **themes** to use in **pysentation** that all follow the <a href="https://github.com/Textualize/rich">rich</a> module. They are mentioned below.
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Colors <a class="anchor" id="colors"></a>
 This is a list of **16** main colors that you can **use** in pysentation. You can see the information of more diverse colors from <a href="https://rich.readthedocs.io/en/stable/appendix/colors.html#appendix-colors">here</a>.
@@ -381,6 +453,10 @@ This is a list of **16** main colors that you can **use** in pysentation. You ca
 | ![#ff00ff](https://placehold.co/205x20/ff00ff/ff00ff.png) | "bright_magenta" | 13     |-|-|
 | ![#00ffff](https://placehold.co/205x20/00ffff/00ffff.png) | "bright_cyan"    | 14     |-|-|
 | ![#ffffff](https://placehold.co/205x20/ffffff/ffffff.png) | "bright_white"   | 15     |-|-|
+
+<br />
+
+[↑ Table of contents](#contents)
 
 ## Themes <a class="anchor" id="themes"></a>
 **Popular** and **high-quality** themes are listed so that you can **use** them. Visit <a href="https://pygments.org/styles/">here</a> for more.
@@ -411,8 +487,20 @@ This is a list of **16** main colors that you can **use** in pysentation. You ca
 | one-dark       |                    | :heavy_check_mark: |
 | dracula        |                    | :heavy_check_mark: |
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Bugs/Requests <a class="anchor" id="bugs_requests"></a>
 Please send **bug reports** and **feature** requests through <a href="https://github.com/mimseyedi/pysentation/issues">github issue tracker</a>.
 
+<br />
+
+[↑ Table of contents](#contents)
+
 ## License <a class="anchor" id="license"></a>
 **pysentation** is a **free** and **open source** project under the **GPL-3** LICENSE. Any **contribution** is welcome. You can do this by **registering** a **pull request**.
+
+<br />
+
+[↑ Table of contents](#contents)
