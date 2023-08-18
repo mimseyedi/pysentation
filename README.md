@@ -183,13 +183,13 @@ Output:
 
 ## Color <a class="anchor" id="color"></a>
 This property refers to the **color** of the slide and its **components** **(The default value is equal to `default` or color of the terminal font)**:
-
+![img2](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-color-example.png)
 
 Click <a href="#colors">here</a> to view the available colors.
 
 ## Theme <a class="anchor" id="theme"></a>
 This property refers to the **theme** of the **syntax highlighters** in the slide **(The default value is `gruvbox-dark`)**:
-
+![img3](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/theme-example.png)
 
 Click <a href="#themes">here</a> to view the available themes.
 
