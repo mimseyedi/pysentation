@@ -29,6 +29,8 @@
 
 ## Introduction <a class="anchor" id="intro"></a>
 
+![img2](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-trailer.gif)
+
 pysentation is a CLI tool for displaying Python presentations.
 
 pysentation, by taking a Python file written with simple but specific rules, can convert the contents of the Python file into a slide show and display it.
@@ -84,14 +86,14 @@ But there is a **second way**! What could be better than **understanding** how t
 
 There are two very **simple** steps for this.
 
-First of all, **download** this python file with the help of **curl**:
+First of all, **download** this pysentation file with the help of **curl**:
 ```
-curl -o requirements.txt https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/guide/train_journey.py
+curl -o train_journey.pysent https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/guide/train_journey.pysent
 ```
 
 Then after you install **pysentation**, run the file you downloaded with the **pysentation** command:
 ```
-pysentation train_journey.py
+pysentation train_journey.pysent
 ```
 
 <br />
@@ -99,7 +101,7 @@ pysentation train_journey.py
 [↑ Table of contents](#contents)
 
 ## pysentation file <a class="anchor" id="pysentation_file"></a>
-To use **pysentation**, you first need a **pysentation file**. The pysentation file is actually a **Python file**. But it follows **rules** that can be converted into a **slideshow** and interpreted by **pysentation CLI**.
+To use **pysentation**, you first need a **pysentation file**. The pysentation file is actually a **Python file** or a converted file with (.pysent) suffix. But it follows **rules** that can be converted into a **slideshow** and interpreted by **pysentation CLI**.
 
 <br />
 
@@ -218,7 +220,7 @@ Output:
 
 ## Color <a class="anchor" id="color"></a>
 This property refers to the **color** of the slide and its **components** **(The default value is equal to `default` or color of the terminal font)**:
-![img2](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-color-example.png)
+![img3](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-color-example.png)
 
 Click <a href="#colors">here</a> to view the available colors.
 
@@ -228,7 +230,7 @@ Click <a href="#colors">here</a> to view the available colors.
 
 ## Theme <a class="anchor" id="theme"></a>
 This property refers to the **theme** of the **syntax highlighters** in the slide **(The default value is `gruvbox-dark`)**:
-![img3](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/theme-example.png)
+![img4](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/theme-example.png)
 
 Click <a href="#themes">here</a> to view the available themes.
 
@@ -336,7 +338,7 @@ Even if the code **raises** an **exception**, the **error message** will be disp
 #: Pay attention to the following example of how errors are displayed:
 def div(a, b):
     return a / b
-# Division by zero
+
 print(div(4, 0))
 #pysentation}
 ```
@@ -349,7 +351,7 @@ Output:
 ┃                                                                                             ┃
 ┃ ❱ 1 def div(a, b):                                                                          ┃
 ┃   2 │   return a / b                                                                        ┃
-┃   3 # Division by zero                                                                      ┃
+┃   3                                                                                         ┃
 ┃   4 print(div(4, 0))                                                                        ┃
 ┃                                                                                             ┃
 ┃ ╭─ <Error> ───────────────────────────────────────────────────────────────────────────────╮ ┃
@@ -368,7 +370,7 @@ Output:
 ## Slideshow screen <a class="anchor" id="slideshow"></a>
 The **slideshow screen** is the **main** screen for displaying slides. When we have prepared a **pysentation file**, we can **run** the slides with the help of the following **command** and **manage** it with the help of special **keys**:
 ```
-pysentation my_file.py
+pysentation my_file.py | my_file.pysent
 ```
 
 <br />
@@ -378,17 +380,19 @@ pysentation my_file.py
 ## Hot keys <a class="anchor" id="hot_keys"></a>
 The following table introduces the **hot keys**:
 
-| Key       | Action                   |
-|-----------|--------------------------|
-| Right →   | Next slide.              |
-| Left  ←   | Previous slide.          |
-| Up ↑      | Highlight top line.      |
-| Down ↓    | Highlight bottom line.   |
-| r         | Reset the current slide. |
-| shift + r | Reset the screen.        |
-| f         | Go to first slide.       |
-| l         | Go to last slide.        |
-| q         | Quit.                    |
+| Key       | Action                          |
+|-----------|---------------------------------|
+| Right →   | Next slide.                     |
+| Left  ←   | Previous slide.                 |
+| Up ↑      | Highlight top line.             |
+| Down ↓    | Highlight bottom line.          |
+| r         | Reset the current slide.        |
+| shift + r | Reset the screen.               |
+| j         | jump to a slide by slide number |
+| shift + s | Search by slide title           |
+| f         | Go to first slide.              |
+| l         | Go to last slide.               |
+| q         | Quit.                           |
 
 <br />
 
@@ -413,6 +417,8 @@ Options:
   -p, --property INTEGER  Display the properties of the selected slide.
   -s, --slides            Display the slides on the screen with their
                           position.
+  -e, --export PATH       Export a Python file to an encrypted file with a
+                          .pysent suffix.
   -o, --output PATH       Writing all slides in order in a text file.
   -v, --version           Display the current version of pysentation installed
                           on the system.
