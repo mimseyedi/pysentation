@@ -1,6 +1,6 @@
 [![pypi](https://img.shields.io/pypi/v/pysentation.svg)](https://pypi.org/project/pysentation/) [![support-version](https://img.shields.io/pypi/pyversions/pysentation)](https://img.shields.io/pypi/pyversions/pysentation) [![license](https://img.shields.io/github/license/mimseyedi/pysentation.svg)](https://github.com/mimseyedi/pysentation/blob/master/LICENSE) [![commit](https://img.shields.io/github/last-commit/mimseyedi/pysentation)](https://github.com/mimseyedi/pysentation/commits/master)
 
-![img1](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-poster.png)
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-poster.png)
 
 ## Table of Contents: <a class="anchor" id="contents"></a>
 * [Introduction](#intro) 
@@ -29,7 +29,7 @@
 
 ## Introduction <a class="anchor" id="intro"></a>
 
-![img2](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-trailer.gif)
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-trailer.gif)
 
 pysentation is a CLI tool for displaying Python presentations.
 
@@ -220,7 +220,7 @@ Output:
 
 ## Color <a class="anchor" id="color"></a>
 This property refers to the **color** of the slide and its **components** **(The default value is equal to `default` or color of the terminal font)**:
-![img3](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-color-example.png)
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/color-property.png)
 
 Click <a href="#colors">here</a> to view the available colors.
 
@@ -230,7 +230,7 @@ Click <a href="#colors">here</a> to view the available colors.
 
 ## Theme <a class="anchor" id="theme"></a>
 This property refers to the **theme** of the **syntax highlighters** in the slide **(The default value is `gruvbox-dark`)**:
-![img4](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/theme-example.png)
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/theme-property.png)
 
 Click <a href="#themes">here</a> to view the available themes.
 
@@ -286,7 +286,7 @@ Comments start with `#:`:
 ```
 
 Output:
-![img4](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/slide-comment-example.png)
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/comments.png)
 
 <br />
 
@@ -443,22 +443,22 @@ This is a list of **16** main colors that you can **use** in pysentation. You ca
 
 | Color                                                     | Name             | Number | Hex | RGB  |
 |-----------------------------------------------------------|------------------|--------| --- |------|
-| ![#000000](https://placehold.co/205x20/000000/000000.png) | "black"          | 0      |-|-|
-| ![#800000](https://placehold.co/205x20/800000/800000.png) | "red"            | 1      |-|-|
-| ![#008000](https://placehold.co/205x20/008000/008000.png) | "green"          | 2      |-|-|
-| ![#808000](https://placehold.co/205x20/808000/808000.png) | "yellow"         | 3      |-|-|
-| ![#000080](https://placehold.co/205x20/000080/000080.png) | "blue"           | 4      |-|-|
-| ![#800080](https://placehold.co/205x20/800080/800080.png) | "magenta"        | 5      |-|-|
-| ![#008080](https://placehold.co/205x20/008080/008080.png) | "cyan"           | 6      |-|-|
-| ![#c0c0c0](https://placehold.co/205x20/c0c0c0/c0c0c0.png) | "white"          | 7      |-|-|
-| ![#808080](https://placehold.co/205x20/808080/808080.png) | "bright_black"   | 8      |-|-|
-| ![#ff0000](https://placehold.co/205x20/ff0000/ff0000.png) | "bright_red"     | 9      |-|-|
-| ![#00ff00](https://placehold.co/205x20/00ff00/00ff00.png) | "bright_green"   | 10     |-|-|
-| ![#ffff00](https://placehold.co/205x20/ffff00/ffff00.png) | "bright_yellow"  | 11     |-|-|
-| ![#0000ff](https://placehold.co/205x20/0000ff/0000ff.png) | "bright_blue"    | 12     |-|-|
-| ![#ff00ff](https://placehold.co/205x20/ff00ff/ff00ff.png) | "bright_magenta" | 13     |-|-|
-| ![#00ffff](https://placehold.co/205x20/00ffff/00ffff.png) | "bright_cyan"    | 14     |-|-|
-| ![#ffffff](https://placehold.co/205x20/ffffff/ffffff.png) | "bright_white"   | 15     |-|-|
+| ![#000000](https://placehold.co/150x20/000000/000000.png) | "black"          | 0      |-|-|
+| ![#800000](https://placehold.co/150x20/800000/800000.png) | "red"            | 1      |-|-|
+| ![#008000](https://placehold.co/150x20/008000/008000.png) | "green"          | 2      |-|-|
+| ![#808000](https://placehold.co/150x20/808000/808000.png) | "yellow"         | 3      |-|-|
+| ![#000080](https://placehold.co/150x20/000080/000080.png) | "blue"           | 4      |-|-|
+| ![#800080](https://placehold.co/150x20/800080/800080.png) | "magenta"        | 5      |-|-|
+| ![#008080](https://placehold.co/150x20/008080/008080.png) | "cyan"           | 6      |-|-|
+| ![#c0c0c0](https://placehold.co/150x20/c0c0c0/c0c0c0.png) | "white"          | 7      |-|-|
+| ![#808080](https://placehold.co/150x20/808080/808080.png) | "bright_black"   | 8      |-|-|
+| ![#ff0000](https://placehold.co/150x20/ff0000/ff0000.png) | "bright_red"     | 9      |-|-|
+| ![#00ff00](https://placehold.co/150x20/00ff00/00ff00.png) | "bright_green"   | 10     |-|-|
+| ![#ffff00](https://placehold.co/150x20/ffff00/ffff00.png) | "bright_yellow"  | 11     |-|-|
+| ![#0000ff](https://placehold.co/150x20/0000ff/0000ff.png) | "bright_blue"    | 12     |-|-|
+| ![#ff00ff](https://placehold.co/150x20/ff00ff/ff00ff.png) | "bright_magenta" | 13     |-|-|
+| ![#00ffff](https://placehold.co/150x20/00ffff/00ffff.png) | "bright_cyan"    | 14     |-|-|
+| ![#ffffff](https://placehold.co/150x20/ffffff/ffffff.png) | "bright_white"   | 15     |-|-|
 
 <br />
 
