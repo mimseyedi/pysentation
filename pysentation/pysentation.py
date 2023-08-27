@@ -123,6 +123,7 @@ def options_manager(screen: PysentationScreen, options: dict) -> None:
 
             screen_manager(screen=screen)
 
+
 @click.command(
     context_settings={'help_option_names': ['-h', '--help']},
     epilog="pysentation Github repo: https://github.com/mimseyedi/pysentation"
@@ -209,9 +210,9 @@ def main(**options):
                 )
 
             except (PysentationError, IsADirectoryError, FileNotFoundError,) as error:
-                cprint(
-                    f"[bold red]Error:[/bold red] {error}"
-                )
+                    cprint("[bold red]Error:[/bold red]", end=' ')
+                    print(error)
+
     else:
         click.echo(
             "Usage: pysentation [OPTIONS] [PYSENTATION_FILE]...\nTry 'pysentation --help' for help.\n\nError: Missing argument 'PYSENTATION_FILE...'.")
