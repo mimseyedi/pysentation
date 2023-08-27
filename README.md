@@ -18,25 +18,25 @@
       * [Interpretable](#interpretable)
     * [Comments](#comments)
     * [Codes](#codes)
+    * [Lines](#lines)
   * [Slideshow screen](#slideshow)
     * [Hot keys](#hot_keys)
   * [Options](#options)
 * [Colors and themes](#colors_and_themes)
   * [Colors](#colors)
-  * [Theme](#theme)
+  * [Themes](#themes)
 * [Bugs/Requests](#bugs_requests)
 * [License](#license)
 
 ## Introduction <a class="anchor" id="intro"></a>
 
-![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-trailer.gif)
+**pysentation** is a **CLI** for displaying Python **presentations**.
 
-pysentation is a CLI tool for displaying Python presentations.
-
-pysentation, by taking a Python file written with simple but specific rules, can convert the contents of the Python file into a slide show and display it.
+**pysentation**, by taking a **Python file** written with simple but specific **rules**, can **convert** the contents of the Python file into a **slide show** and display it.
 
 Follow the documentation or read <a href="#">this</a> section for more information.
 
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-trailer.gif)
 <br />
 
 [↑ Table of contents](#contents)
@@ -61,14 +61,14 @@ First, download the `requirements.txt` file with **curl**:
 curl -o requirements.txt https://raw.githubusercontent.com/mimseyedi/pysentation/master/requirements.txt
 ```
 
-Then install the packages in the `requirements.txt` using **pip**:
+Then install the **packages** in the `requirements.txt` using **pip**:
 ```
 python3 -m pip install -r requirements.txt
 ```
 
 <br/>
 
-You can still do it yourself without needing the `requirements.txt` file:
+You can still do it **yourself** without needing the `requirements.txt` file:
 ```
 python3 -m pip install rich==13.4.1 getkey==0.6.5 click==8.1.3
 ```
@@ -88,12 +88,12 @@ There are two very **simple** steps for this.
 
 First of all, **download** this pysentation file with the help of **curl**:
 ```
-curl -o train_journey.pysent https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/guide/train_journey.pysent
+curl -o train_journey.py https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/guide/train_journey.py
 ```
 
 Then after you install **pysentation**, run the file you downloaded with the **pysentation** command:
 ```
-pysentation train_journey.pysent
+pysentation train_journey.py
 ```
 
 <br />
@@ -111,6 +111,7 @@ To use **pysentation**, you first need a **pysentation file**. The pysentation f
 A **pysentation** file consists of a **pysentation** scope. Specifying the scope of the pysentation is mandatory so that the **interpretation** can be done correctly:
 ```python
 #pysentation{
+...
 ...
 #pysentation}
 ```
@@ -154,7 +155,7 @@ You can also define **several** slides in **one scope**:
 [↑ Table of contents](#contents)
 
 ## Properties <a class="anchor" id="props"></a>
-Each slide has properties that can change the presentation of the slide. These properties are listed in the table below, which I will examine one by one in the following:
+Each **slide** has **properties** that can **change** the presentation of the slide. These properties are **listed** in the table below, which I will examine one by one in the following:
 
 |Property| Action                                                                                                                                     | Definition form        |Default value|
 |---|--------------------------------------------------------------------------------------------------------------------------------------------|------------------------|---|
@@ -367,6 +368,107 @@ Output:
 
 [↑ Table of contents](#contents)
 
+## Lines <a class="anchor" id="lines"></a>
+**Lines** are the simplest **elements** of slides. The task of these line elements is to **draw** a **horizontal** line to **separate** the screen, and its sign is `#_line`.
+
+```python
+#pysentation{
+
+#>slide
+#-title: About lines with merge sort
+#-interpretable: False
+
+#:Create sub_array2 ← A[start..mid] and sub_array2 ← A[mid+1..end]
+def mergeSort(arr):
+    mid = len(arr)//2
+    sub_array1 = arr[:mid]
+    sub_array2 = arr[mid:]
+#_line
+#:Sort the two halves:
+    mergeSort(sub_array1)
+    mergeSort(sub_array2)
+    # Initial values for pointers that we use to keep track of where we are in each array
+    i = j = k = 0
+#_line
+#:Until we reach the end of either start or end, pick larger among elements start and end and place them in the correct position in the sorted array:
+    while i < len(sub_array1) and j < len(sub_array2):
+        if sub_array1[i] < sub_array2[j]:
+            arr[k] = sub_array1[i]
+            i += 1
+        else:
+            arr[k] = sub_array2[j]
+            j += 1
+        k += 1
+#_line
+#:When all elements are traversed in either arr1 or arr2, pick up the remaining elements and put in sorted array:
+    while i < len(sub_array1):
+        arr[k] = sub_array1[i]
+        i += 1
+        k += 1
+
+    while j < len(sub_array2):
+        arr[k] = sub_array2[j]
+        j += 1
+        k += 1
+#pysentation}
+```
+
+Output:
+```
+┏━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ About lines with merge sort ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┓
+┃                                                                                             ┃
+┃ Create sub_array2 ← A and sub_array2 ← A                                                    ┃
+┃                                                                                             ┃
+┃ ❱ 1 def mergeSort(arr):                                                                     ┃
+┃   2 │   mid = len(arr)//2                                                                   ┃
+┃   3 │   sub_array1 = arr[:mid]                                                              ┃
+┃   4 │   sub_array2 = arr[mid:]                                                              ┃
+┃                                                                                             ┃
+┃ ─────────────────────────────────────────────────────────────────────────────────────────── ┃
+┃                                                                                             ┃
+┃ Sort the two halves:                                                                        ┃
+┃                                                                                             ┃
+┃   1 │   mergeSort(sub_array1)                                                               ┃
+┃   2 │   mergeSort(sub_array2)                                                               ┃
+┃   3 │   # Initial values for pointers that we use to keep track of where we are in each ... ┃
+┃   4 │   i = j = k = 0                                                                       ┃
+┃                                                                                             ┃
+┃ ─────────────────────────────────────────────────────────────────────────────────────────── ┃
+┃                                                                                             ┃
+┃ Until we reach the end of either start or end, pick larger among elements start and end and ┃
+┃ place them in the correct position in the sorted array:                                     ┃
+┃                                                                                             ┃
+┃   1 │   while i < len(sub_array1) and j < len(sub_array2):                                  ┃
+┃   2 │   │   if sub_array1[i] < sub_array2[j]:                                               ┃
+┃   3 │   │   │   arr[k] = sub_array1[i]                                                      ┃
+┃   4 │   │   │   i += 1                                                                      ┃
+┃   5 │   │   else:                                                                           ┃
+┃   6 │   │   │   arr[k] = sub_array2[j]                                                      ┃
+┃   7 │   │   │   j += 1                                                                      ┃
+┃   8 │   │   k += 1                                                                          ┃
+┃                                                                                             ┃
+┃ ─────────────────────────────────────────────────────────────────────────────────────────── ┃
+┃                                                                                             ┃
+┃ When all elements are traversed in either arr1 or arr2, pick up the remaining elements and  ┃
+┃ put in sorted array:                                                                        ┃
+┃                                                                                             ┃
+┃   1 │   while i < len(sub_array1):                                                          ┃
+┃   2 │   │   arr[k] = sub_array1[i]                                                          ┃
+┃   3 │   │   i += 1                                                                          ┃
+┃   4 │   │   k += 1                                                                          ┃
+┃   5 │                                                                                       ┃
+┃   6 │   while j < len(sub_array2):                                                          ┃
+┃   7 │   │   arr[k] = sub_array2[j]                                                          ┃
+┃   8 │   │   j += 1                                                                          ┃
+┃   9 │   │   k += 1                                                                          ┃
+┃                                                                                             ┃
+┗━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━ 1/1 ━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━━┛
+```
+
+<br />
+
+[↑ Table of contents](#contents)
+
 ## Slideshow screen <a class="anchor" id="slideshow"></a>
 The **slideshow screen** is the **main** screen for displaying slides. When we have prepared a **pysentation file**, we can **run** the slides with the help of the following **command** and **manage** it with the help of special **keys**:
 ```
@@ -380,19 +482,20 @@ pysentation my_file.py | my_file.pysent
 ## Hot keys <a class="anchor" id="hot_keys"></a>
 The following table introduces the **hot keys**:
 
-| Key       | Action                          |
-|-----------|---------------------------------|
-| Right →   | Next slide.                     |
-| Left  ←   | Previous slide.                 |
-| Up ↑      | Highlight top line.             |
-| Down ↓    | Highlight bottom line.          |
-| r         | Reset the current slide.        |
-| shift + r | Reset the screen.               |
-| j         | jump to a slide by slide number |
-| shift + s | Search by slide title           |
-| f         | Go to first slide.              |
-| l         | Go to last slide.               |
-| q         | Quit.                           |
+| Key           | Action                          |
+|---------------|---------------------------------|
+| **Right** →   | Next slide.                     |
+| **Left**  ←   | Previous slide.                 |
+| **Up** ↑      | Highlight top line.             |
+| **Down** ↓    | Highlight bottom line.          |
+| **f**         | Go to first slide.              |
+| **l**         | Go to last slide.               |
+| **r**         | Reset the current slide.        |
+| **shift + r** | Reset the screen.               |
+| **j**         | jump to a slide by slide number |
+| **shift + s** | Search by slide title           |
+| **shift + k** | Display The hot-keys guide.     |
+| **q**         | Quit.                           |
 
 <br />
 
