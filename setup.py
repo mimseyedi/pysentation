@@ -15,16 +15,16 @@ from pathlib import Path
 
 
 README = Path(Path(__file__).parent, "README.md").read_text()
-REQUIREMENTS = Path(Path(__file__).parent, "requirements.txt").read_text().splitlines()
-exec(open('pysentation/_version.py').read())
+REQUIREMENTS = ["rich==13.4.1", "getkey==0.6.5", "click==8.1.3"]
+exec(open('pysentation/package.py').read())
 
 
 setup (
-    name = 'pysentation',
-    description = 'pysentation is a CLI for displaying Python presentations.',
-    version = __version__,
-    packages = find_packages(),
-    install_requires = REQUIREMENTS,
+    name='pysentation',
+    description='pysentation is a CLI for displaying Python presentations.',
+    version=__version__,
+    packages=find_packages(),
+    install_requires=REQUIREMENTS,
     python_requires='>=3.11',
     entry_points='''
         [console_scripts]
