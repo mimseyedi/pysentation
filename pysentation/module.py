@@ -12,12 +12,16 @@ pysentation Github repository: https://github.com/mimseyedi/pysentation
 
 import os
 import sys
+import pickle
 import traceback
 from pathlib import Path
+from getkey import getkey
 from rich.box import HEAVY
+from rich.rule import Rule
+from rich.table import Table
 from rich.panel import Panel
-from rich.console import Group
 from rich import print as cprint
+from rich.console import Group, Align
 from rich.color import ColorParseError
 from rich.style import StyleType, Style
 from rich.markup import render, MarkupError
@@ -29,18 +33,15 @@ from signs import (
     PYSENTATION_SLIDE,
     PYSENTATION_PROPERTY,
     PYSENTATION_COMMENT,
+    PYSENTATION_LINE,
 )
 from errors import (
-    PysentationError,
-    PysentationScreenError,
-    PysentationInitError,
-    PysentationScopeRangeError,
-    PysentationPropertyError,
-    PysentationCommentError,
-    PysentationFileNotFoundError,
-    PysentationIsADirectoryError,
-    PysentationNotAPythonFileError,
-    PysentationEmptyScreenError,
+    InterpretationError,
+    ScreenError,
+    ScopeDetectionError,
+    PropertyError,
+    CommentRenderingError,
+    NotAPysentationFileError,
 )
 
 
@@ -86,9 +87,10 @@ class PysentationSlide:
         self.__h_line: int = 1
         self.__code_index: int = 0
 
-        if self.interpretable:
-            for index, element in enumerate(self.content):
-                if isinstance(element, Syntax):
+
+        for index, element in enumerate(self.content):
+            if isinstance(element, Syntax):
+                if self.interpretable:
                     status, response = self.interpret(source=element.code)
 
                     output_panel = Panel(
@@ -101,7 +103,7 @@ class PysentationSlide:
                     self.content.insert(index + 1, "")
                     self.content.insert(index + 2, output_panel)
 
-                    element._theme = element.get_theme(self.theme)
+                element._theme = element.get_theme(self.theme)
 
         self.__codes: list = [
             element for element in self.content if isinstance(element, Syntax)
@@ -378,9 +380,68 @@ class PysentationScreen:
             self.__slideno = slide_index
             self.display()
         else:
-            raise PysentationScreenError(
+            raise ScreenError(
                 f"There is no slide with this number -> {slide_index + 1}"
             )
+
+    def search_by_index(self, index: str) -> None:
+        """
+        The task of this method is to search the slide with the slide number and display it.
+
+        :param index: The slide index or number in string (input) format.
+        :return: None
+        """
+
+        if index.isdigit():
+            _index = int(index)
+
+            if 0 < _index <= len(self.slides):
+                self.start_from(slide_index=_index - 1)
+            else:
+                self.display()
+                cprint(
+                    f"[bold red]Error:[/bold red] There is no slide with this number -> {_index}!"
+                )
+        else:
+            self.display()
+            cprint(
+                "[bold red]Error:[/bold red] The slide number must be a positive integer."
+            )
+
+    def search_by_title(self, title: str) -> None:
+        """
+        The task of this method is to search the slide with the slide title and display it.
+
+        :param title: The title of a slide.
+        :return: None
+        """
+
+        titles: dict = {
+            slide.title.strip().lower(): int(slide.slide_number.split("/")[0])
+            for slide in self.slides
+        }
+
+        max_intersect, max_sentence = 0, ''
+
+        for t in titles.keys():
+            temp = set(t.split())
+            x = len(
+                temp.intersection(
+                    set(title.lower().split())
+                )
+            )
+            if x > max_intersect:
+                max_intersect, max_sentence = x, t
+
+        slide_number = titles.get(max_sentence)
+
+        if slide_number is None:
+            self.display()
+            cprint(
+                f"[bold red]Error:[/bold red] No slides with this title were found -> '{title}'"
+            )
+        else:
+            self.start_from(slide_index=slide_number - 1)
 
     def set_color(self, color: str) -> None:
         """
@@ -393,7 +454,7 @@ class PysentationScreen:
         try:
             Style(color=color)
         except ColorParseError:
-            raise PysentationScreenError(
+            raise ScreenError(
                 (f"The '{color}' is not a valid color.\n"
                   "Acceptable colors: https://github.com/mimseyedi/pysentation#colors")
             )
@@ -445,7 +506,7 @@ class PysentationScreen:
                     f"Theme\t\t>>> {slide.theme}\n"
                     f"Interpretable\t>>> {slide.interpretable}")
         else:
-            raise PysentationScreenError(
+            raise ScreenError(
                 f"There is no slide with this number -> {slide_index + 1}"
             )
 
@@ -479,11 +540,11 @@ class PysentationScreen:
                     for slide in self.slides:
                         cprint(slide.render(), file=output_file)
             else:
-                raise PysentationScreenError(
+                raise ScreenError(
                     "The output file must not be a directory and must have a .txt suffix."
                 )
         else:
-            raise PysentationScreenError(
+            raise ScreenError(
                 f"A file with this name already exists -> '{output_path}'"
             )
 
@@ -513,6 +574,54 @@ class PysentationScreen:
             slide.reset_slide()
 
         self.display()
+
+    def display_hot_keys(self) -> None:
+        """
+        A guide slide to display the hot keys help table on the screen.
+
+        :return: None
+        """
+
+        keys_table: Table = Table(
+            'KEYS', 'ACTION',
+            box=HEAVY,
+            caption="Press the 'q' to exit.\n[underline]https://github.com/mimseyedi/pysentation[/underline]",
+            caption_justify='left',
+        )
+
+        for key, info in {
+            "Right →": "Next slide.",
+            "Left ←": "Previous slide.",
+            "Up ↑": "Highlight top line.",
+            "Down ↓": "Highlight bottom line.",
+            "f": "Go to first slide.",
+            "l": "Go to last slide.",
+            "r": "Reset the current slide.",
+            "shift+r": "Reset the screen.",
+            "j": "Jump to a slide by slide number.",
+            "shift+s": "Search by slide title.",
+            "shift+k": "Display The hot-keys guide.",
+            "q": "Quit."
+        }.items():
+            keys_table.add_row(key, info)
+
+        os.system('clear' if os.name == 'posix' else 'cls')
+
+        _, row = os.get_terminal_size()
+        new_line: int = (row - 19) // 2
+        cprint('\n' * new_line, Align(keys_table, align='center'))
+
+        try:
+            while True:
+                input_key = getkey()
+
+                if input_key == 'q':
+                    self.display()
+                    break
+
+        except KeyboardInterrupt:
+            self.display()
+
 
     def __eq__(self, other):
         return True if self.slides == other.slides else False
@@ -548,8 +657,12 @@ class Pysentation:
         :return: str
         """
 
-        with open(file=self.source, mode='r') as source_file:
-            source: str = source_file.read()
+        if self.source.suffix == '.py':
+            with open(file=self.source, mode='r') as source_file:
+                source: str = source_file.read()
+        else:
+            with open(file=self.source, mode='rb') as source_file:
+                source: str = pickle.load(source_file)
 
         status, response = self.detector(source=source)
 
@@ -559,7 +672,7 @@ class Pysentation:
         return response
 
     @staticmethod
-    def detector(source: str) -> tuple[bool, str|PysentationError]:
+    def detector(source: str) -> tuple[bool, str|ScopeDetectionError]:
         """
         The task of this method is to find the scope and range of pysentation.
 
@@ -581,11 +694,11 @@ class Pysentation:
         if start_line:
             return (
                 False,
-                PysentationScopeRangeError(
+                ScopeDetectionError(
                     f"The pysentation scope is started on line '{start_line}' but never closed."
                 )
             )
-        return False, PysentationInitError("No scope of pysentation found.")
+        return False, ScopeDetectionError("No scope of pysentation found.")
 
     @staticmethod
     def separator(source_code: str) -> list[str]:
@@ -596,10 +709,26 @@ class Pysentation:
         :return: list[str]
         """
 
-        slides: list = source_code.split(PYSENTATION_SLIDE)
+        _source_code: list = list(
+            map(
+                lambda x: x + "\n",
+                source_code.split("\n")
+            )
+        )
 
-        if slides:
-            slides.pop(0)
+        slides, starting_zone, first = [], 0, True
+
+        for index, line in enumerate(_source_code):
+            if line.strip().startswith(PYSENTATION_SLIDE):
+                if first:
+                    first = False
+                else:
+                    slides.append(
+                        ''.join(_source_code[starting_zone:index])
+                    )
+                starting_zone = index
+
+        slides.append(''.join(_source_code[starting_zone:]))
 
         return slides
 
@@ -631,17 +760,29 @@ class Pysentation:
 
                     if prop in props_items:
                         if value:
-                            if prop == 'color':
+                            if prop == 'title':
                                 try:
+                                    render(value)
+                                except MarkupError:
+                                    raise CommentRenderingError(
+                                        f"The title value '{value.strip()}' in slide {slide_number}, line {lineno} cannot be rendered!"
+                                    )
+                            elif prop == 'color':
+                                try:
+                                    render(value)
                                     Style(color=value)
                                 except ColorParseError:
-                                    raise PysentationPropertyError(
+                                    raise PropertyError(
                                         (f"The '{value}' in slide {slide_number}, line {lineno} is not a valid color for '{prop}' property.\n"
                                          "Acceptable colors: https://github.com/mimseyedi/pysentation#colors")
                                     )
+                                except MarkupError:
+                                    raise PropertyError(
+                                        f"The color value in slide {slide_number}, line {lineno} cannot be rendered!"
+                                    )
                             elif prop in ["interpretable", 'expand']:
                                 if value.strip() not in ['True', 'False']:
-                                    raise PysentationPropertyError(
+                                    raise PropertyError(
                                         f"The value of '{prop}' property in slide {slide_number}, line {lineno} must be in bool[True/False] type."
                                     )
                                 else:
@@ -650,27 +791,28 @@ class Pysentation:
                             props[prop] = value.strip()
 
                         else:
-                            raise PysentationPropertyError(
+                            raise PropertyError(
                                 f"invalid/Empty value for '{prop}' property in slide {slide_number}, line {lineno}.",
                             )
                     else:
-                        raise PysentationPropertyError(
+                        raise PropertyError(
                             f"There is no such property in slide {slide_number}, line {lineno} -> '{prop}'"
                         )
 
                 except IndexError:
-                    raise PysentationPropertyError(
+                    raise PropertyError(
                         f"Undefined property or invalid value in slide {slide_number}, line {lineno}."
                     )
 
         return props
 
     @staticmethod
-    def extract_content(slide: list[str]) -> list[str]:
+    def extract_content(slide: list[str], slide_number: str) -> list[str]:
         """
         The task of this method is to extract and validate the content of a slide.
 
         :param slide: A text-base slide separated by the self.separator method
+        :param slide_number: The number of slide in string [./.].
         :return: list[str]
         """
 
@@ -680,15 +822,17 @@ class Pysentation:
             if not line.strip().startswith(PYSENTATION_PROPERTY):
                 if line.strip().startswith(PYSENTATION_COMMENT):
                     try:
-                        render(line.strip())
-                    except MarkupError:
-                        raise PysentationCommentError(
-                            f"Written comment cannot be rendered -> '{line.strip()[2:]}'"
+                        render(line.strip()[2:])
+                    except MarkupError as error:
+                        raise CommentRenderingError(
+                            error.__str__() + f" in slide {slide_number}, line {index}."
                         )
 
                 content.append(line)
 
-        content.pop(0)
+        if content:
+            content.pop(0)
+
         return content
 
     @staticmethod
@@ -702,35 +846,59 @@ class Pysentation:
 
         modified_content, codes, first_sh = [], '', True
 
-        for line in content:
-            if line.strip():
-                if not line.strip().startswith(PYSENTATION_COMMENT):
-                    codes += line.rstrip() + "\n"
-                else:
-                    if codes:
-                        modified_content.append(
-                            Syntax(
-                                code=codes[:-1],
-                                lexer='python',
-                                line_numbers=True,
-                                start_line=1,
-                                indent_guides=True,
-                                background_color='default',
-                                highlight_lines={1 if first_sh else None}
-                            )
-                        )
-                        first_sh = False
+        for index, line in enumerate(content):
+            if line is None:
+                modified_content.append("")
+                continue
+
+            if not line.strip().startswith((PYSENTATION_COMMENT, PYSENTATION_LINE,)):
+                codes += line.rstrip() + "\n"
+            else:
+                if codes.strip():
+                    if modified_content:
                         modified_content.append("")
-                        modified_content.append(line.strip()[2:] + "\n")
+
+                    modified_content.append(
+                        Syntax(
+                            code=codes.rstrip(),
+                            lexer='python',
+                            line_numbers=True,
+                            start_line=1,
+                            indent_guides=True,
+                            background_color='default',
+                            highlight_lines={1 if first_sh else None}
+                        )
+                    )
+                    first_sh = False
+                    modified_content.append("")
+
+                    if line.strip() == PYSENTATION_LINE:
+                        modified_content.append(
+                            Rule(style='bold')
+                        )
                     else:
-                        modified_content.append(line.strip()[2:] + "\n")
+                        modified_content.append(line.strip()[2:])
+                else:
+                    if modified_content:
+                        modified_content.append("")
 
-                    codes: str = ''
+                    if line.strip() == PYSENTATION_LINE:
+                        modified_content.append(
+                            Rule(style='bold')
+                        )
+                    else:
+                        modified_content.append(line.strip()[2:])
 
-        if codes:
+
+                codes: str = ''
+
+        if codes.strip():
+            if modified_content:
+                modified_content.append("")
+
             modified_content.append(
                 Syntax(
-                    code=codes[:-1],
+                    code=codes.rstrip(),
                     lexer='python',
                     line_numbers=True,
                     start_line=1,
@@ -757,7 +925,8 @@ class Pysentation:
         )
         content: list = self.modified_content(
             content=self.extract_content(
-                slide=slide
+                slide=slide,
+                slide_number=slide_number
             )
         )
         return PysentationSlide(
@@ -795,7 +964,7 @@ class Pysentation:
             )
             return screen
 
-        raise PysentationEmptyScreenError(
+        raise ScreenError(
             "There are no slides to display on the screen."
         )
 
@@ -812,13 +981,13 @@ class Pysentation:
             else Path(os.getcwd(), source_path)
 
         for condition, exception in {
-            _source_path.suffix == '.py': PysentationNotAPythonFileError(
-                'The source must be a Python file with (.py) suffix.'
+            _source_path.suffix in ['.py', '.pysent']: NotAPysentationFileError(
+                'The source must be a Python or pysentation file with (.py|.pysent) suffix.'
             ),
-            _source_path.is_file(): PysentationIsADirectoryError(
+            _source_path.is_file(): IsADirectoryError(
                 'The source must be a file, not a directory.'
             ),
-            _source_path.exists(): PysentationFileNotFoundError(
+            _source_path.exists(): FileNotFoundError(
                 f'This file does not exist! -> {_source_path.name}'
             ),
         }.items():
