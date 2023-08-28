@@ -27,7 +27,7 @@ from rich.style import StyleType, Style
 from rich.markup import render, MarkupError
 from rich.syntax import Syntax, SyntaxTheme
 from rich.text import TextType, AlignMethod
-from signs import (
+from .signs import (
     PYSENTATION_STARTING_BLOCK,
     PYSENTATION_ENDING_BLOCK,
     PYSENTATION_SLIDE,
@@ -35,7 +35,7 @@ from signs import (
     PYSENTATION_COMMENT,
     PYSENTATION_LINE,
 )
-from errors import (
+from .errors import (
     InterpretationError,
     ScreenError,
     ScopeDetectionError,

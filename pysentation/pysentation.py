@@ -16,9 +16,9 @@ import pickle
 from pathlib import Path
 from getkey import getkey, keys
 from rich import print as cprint
-from _version import __version__
-from module import Pysentation, PysentationScreen
-from errors import PysentationError, NotAPysentationFileError
+from .package import __version__
+from .module import Pysentation, PysentationScreen
+from .errors import PysentationError, NotAPysentationFileError
 
 
 def screen_manager(screen: PysentationScreen) -> None:
