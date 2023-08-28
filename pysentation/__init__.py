@@ -8,6 +8,3 @@
 
 pysentation Github repository: https://github.com/mimseyedi/pysentation
 """
-
-
-from _version import __version__
