@@ -786,9 +786,9 @@ class Pysentation:
                                         f"The value of '{prop}' property in slide {slide_number}, line {lineno} must be in bool[True/False] type."
                                     )
                                 else:
-                                    value = 'True' if value.strip() == 'True' else ''
+                                    value = True if value.strip() == 'True' else False
 
-                            props[prop] = value.strip()
+                            props[prop] = value.strip() if isinstance(value, str) else value
 
                         else:
                             raise PropertyError(
