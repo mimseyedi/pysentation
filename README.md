@@ -1,6 +1,6 @@
 [![pypi](https://img.shields.io/pypi/v/pysentation.svg)](https://pypi.org/project/pysentation/) [![support-version](https://img.shields.io/pypi/pyversions/pysentation)](https://img.shields.io/pypi/pyversions/pysentation) [![license](https://img.shields.io/github/license/mimseyedi/pysentation.svg)](https://github.com/mimseyedi/pysentation/blob/master/LICENSE) [![commit](https://img.shields.io/github/last-commit/mimseyedi/pysentation)](https://github.com/mimseyedi/pysentation/commits/master)
 
-![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-poster.png)
+![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/Pysentation-poster.png)
 
 ## Table of Contents: <a class="anchor" id="contents"></a>
 * [Introduction](#intro) 
