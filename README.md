@@ -34,7 +34,7 @@
 
 **pysentation**, by taking a **Python file** written with simple but specific **rules**, can **convert** the contents of the Python file into a **slide show** and display it.
 
-Follow the documentation or read <a href="#">this</a> section for more information.
+For more information, I suggest you [start here](#usage).
 
 ![](https://raw.githubusercontent.com/mimseyedi/pysentation/master/docs/images/pysentation-trailer.gif)
 <br />
