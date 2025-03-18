@@ -76,7 +76,7 @@ print(ridiculous_argument(grade=120))
 #-title: Properties/Title
 #:Well, we have reached one of the most [red]important[/red] parts!
 #:Each slide consists of several [bold yellow]properties.[/bold yellow] Features that can [green]affect[/green] the shape and function of the slide.
-#:These properties start with the sign [bold yellow]-#[/bold yellow] and after this sign, their names come with a colon [bold yellow](:)[/bold yellow], which specifies their [blue]value.[/blue]
+#:These properties start with the sign [bold yellow]#-[/bold yellow] and after this sign, their names come with a colon [bold yellow](:)[/bold yellow], which specifies their [blue]value.[/blue]
 #:Let's see example of the property named title:
 #:[bold yellow]#-title:[/bold yellow] [green]Properties/Title[/green]
 #:This property specifies the [red]title[/red] of the slide. I also used this feature to name the title of the same slide that you are in now! [yellow]interesting[/yellow], does not it?
